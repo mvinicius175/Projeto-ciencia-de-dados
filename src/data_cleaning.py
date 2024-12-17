@@ -118,6 +118,20 @@ duren_24_25 = handle_outliers(duren_24_25)
 pistons_23_24 = handle_outliers(pistons_23_24)
 pistons_24_25 = handle_outliers(pistons_24_25)
 
+# Verificar tipos de dados
+def check_data_types(df):
+    return df.dtypes
+print("Cunningham 24-25 data types:\n", check_data_types(cunningham_24_25))
+print("Pistons 24-25 data types:\n", check_data_types(pistons_24_25))   # Não há necessidade de mudar o tipo de nenhuma coluna no momento
+
+# Excluindo a coluna "VIDEO_AVAILABLE" dos datasets de jogadores
+cunningham_23_24 = cunningham_23_24.drop(columns=['VIDEO_AVAILABLE'])
+cunningham_24_25 = cunningham_24_25.drop(columns=['VIDEO_AVAILABLE'])
+ivey_23_24 = ivey_23_24.drop(columns=['VIDEO_AVAILABLE'])
+ivey_24_25 = ivey_24_25.drop(columns=['VIDEO_AVAILABLE'])
+duren_23_24 = duren_23_24.drop(columns=['VIDEO_AVAILABLE'])
+duren_24_25 = duren_24_25.drop(columns=['VIDEO_AVAILABLE'])
+
 # Salvar dados limpos
 cunningham_23_24.to_csv('data/processed/cade_cunningham_stats_23_24.csv', index=False)
 cunningham_24_25.to_csv('data/processed/cade_cunningham_stats_24_25.csv', index=False)
