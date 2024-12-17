@@ -24,6 +24,25 @@ if missing_data_duren.any() > 0:
 if missing_data_pistons.any() > 0:
     print("Pistons datasets have missing data.")
 
+# Lidar com dados ausentes
+def handle_missing_data(df):
+    for column in df.columns:
+        if df[column].isnull().sum() > 0:
+            if df[column].dtype in ['float64', 'int64']:
+                df[column].fillna(df[column].mean(), inplace=True)
+            else:
+                df[column].fillna(df[column].mode()[0], inplace=True)
+    return df
+
+cunningham_23_24 = handle_missing_data(cunningham_23_24)
+cunningham_24_25 = handle_missing_data(cunningham_24_25)
+ivey_23_24 = handle_missing_data(ivey_23_24)
+ivey_24_25 = handle_missing_data(ivey_24_25)
+duren_23_24 = handle_missing_data(duren_23_24)
+duren_24_25 = handle_missing_data(duren_24_25)
+pistons_23_24 = handle_missing_data(pistons_23_24)
+pistons_24_25 = handle_missing_data(pistons_24_25)
+
 # Verificar valores duplicados
 redundant_data_cunningham = cunningham_23_24.duplicated().sum() + cunningham_24_25.duplicated().sum()
 redundant_data_ivey = ivey_23_24.duplicated().sum() + ivey_24_25.duplicated().sum()
@@ -38,6 +57,19 @@ if redundant_data_duren > 0:
     print("Duren datasets have redundant data.")
 if redundant_data_pistons > 0:
     print("Pistons datasets have redundant data.")
+
+    # Lidar com dados duplicados
+    def handle_duplicates(df):
+        return df.drop_duplicates()
+
+    cunningham_23_24 = handle_duplicates(cunningham_23_24)
+    cunningham_24_25 = handle_duplicates(cunningham_24_25)
+    ivey_23_24 = handle_duplicates(ivey_23_24)
+    ivey_24_25 = handle_duplicates(ivey_24_25)
+    duren_23_24 = handle_duplicates(duren_23_24)
+    duren_24_25 = handle_duplicates(duren_24_25)
+    pistons_23_24 = handle_duplicates(pistons_23_24)
+    pistons_24_25 = handle_duplicates(pistons_24_25)
 
 # Verificar valores ruidosos (outliers)
 def detect_outliers(df):
