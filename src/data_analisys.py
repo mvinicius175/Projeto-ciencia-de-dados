@@ -165,4 +165,49 @@ pistons_defensive_summary_24_25 = pd.DataFrame(data_pistons_defense_24_25)
 pistons_defensive_summary_24_25.to_csv('data/exported/pistons_defensive_summary_24_25.csv', index=False)
 
 ##########################################################################################################
+# Apresentar tabela de jogos do time
+team_name_map = {
+    'ATL': 'Atlanta Hawks', 'BOS': 'Boston Celtics', 'BKN': 'Brooklyn Nets', 'CHA': 'Charlotte Hornets',
+    'CHI': 'Chicago Bulls', 'CLE': 'Cleveland Cavaliers', 'DAL': 'Dallas Mavericks', 'DEN': 'Denver Nuggets',
+    'DET': 'Detroit Pistons', 'GSW': 'Golden State Warriors', 'HOU': 'Houston Rockets', 'IND': 'Indiana Pacers',
+    'LAC': 'Los Angeles Clippers', 'LAL': 'Los Angeles Lakers', 'MEM': 'Memphis Grizzlies', 'MIA': 'Miami Heat',
+    'MIL': 'Milwaukee Bucks', 'MIN': 'Minnesota Timberwolves', 'NOP': 'New Orleans Pelicans', 'NYK': 'New York Knicks',
+    'OKC': 'Oklahoma City Thunder', 'ORL': 'Orlando Magic', 'PHI': 'Philadelphia 76ers', 'PHX': 'Phoenix Suns',
+    'POR': 'Portland Trail Blazers', 'SAC': 'Sacramento Kings', 'SAS': 'San Antonio Spurs', 'TOR': 'Toronto Raptors',
+    'UTA': 'Utah Jazz', 'WAS': 'Washington Wizards'
+}
 
+def home_or_away(matchup):
+    if "vs" in matchup:
+        return "Home"
+    elif "@" in matchup:
+        return "Away"
+    return None
+
+def get_adversary(matchup):
+    if "@" in matchup:
+        adversario = matchup.split("@")[1].strip()
+    elif "vs" in matchup:
+        adversario = matchup.split("vs")[1].strip()
+    adversario = adversario.split()[-1]
+    return team_name_map.get(adversario, adversario)
+
+
+def get_score(pts, plus_minus):
+    return f"{pts} - {pts + plus_minus}"
+
+games_23_24 = pistons_23_24
+games_24_25 = pistons_24_25
+
+games_23_24['Home or Away'] = games_23_24['MATCHUP'].apply(home_or_away)
+games_23_24['Adversary'] = games_23_24['MATCHUP'].apply(get_adversary)
+games_23_24['Score'] = games_23_24.apply(lambda row: get_score(row['PTS'], row['PLUS_MINUS']), axis=1)
+games_24_25['Home or Away'] = games_24_25['MATCHUP'].apply(home_or_away)
+games_24_25['Adversary'] = games_24_25['MATCHUP'].apply(get_adversary)
+games_24_25['Score'] = games_24_25.apply(lambda row: get_score(row['PTS'], row['PLUS_MINUS']), axis=1)
+
+games_23_24 = games_23_24[['GAME_DATE', 'Adversary', 'WL', 'Home or Away', 'Score']]
+games_24_25 = games_24_25[['GAME_DATE', 'Adversary', 'WL', 'Home or Away', 'Score']]
+
+games_23_24.to_csv('data/exported/pistons_games_table_23_24.csv', index=False)
+games_24_25.to_csv('data/exported/pistons_games_table_24_25.csv', index=False)
