@@ -8,12 +8,16 @@ duren_23_24      = pd.read_csv('data/raw/jalen_duren_stats_23_24.csv')
 duren_24_25      = pd.read_csv('data/raw/jalen_duren_stats_24_25.csv')
 pistons_23_24    = pd.read_csv('data/raw/detroit_pistons_games_23_24.csv')
 pistons_24_25    = pd.read_csv('data/raw/detroit_pistons_games_24_25.csv')
+west_conference = pd.read_csv('data/raw/west_conference.csv')
+east_conference = pd.read_csv('data/raw/east_conference.csv')
 
 # Verificar dados ausentes
 missing_data_cunningham = cunningham_23_24.isnull().sum() + cunningham_24_25.isnull().sum()
 missing_data_ivey = ivey_23_24.isnull().sum() + ivey_24_25.isnull().sum()
 missing_data_duren = duren_23_24.isnull().sum() + duren_24_25.isnull().sum()
 missing_data_pistons = pistons_23_24.isnull().sum() + pistons_24_25.isnull().sum()
+missing_data_east = east_conference.isnull().sum()
+missing_data_west = west_conference.isnull().sum()
 
 if missing_data_cunningham.any() > 0:
     print("Cunningham datasets have missing data.")
@@ -23,6 +27,10 @@ if missing_data_duren.any() > 0:
     print("Duren datasets have missing data.")
 if missing_data_pistons.any() > 0:
     print("Pistons datasets have missing data.")
+if missing_data_east.any() > 0:
+    print("East conference dataset has missing data.")
+if missing_data_west.any() > 0:
+    print("West conference dataset has missing data.")
 
 # Lidar com dados ausentes
 def handle_missing_data(df):
@@ -46,6 +54,8 @@ redundant_data_cunningham = cunningham_23_24.duplicated().sum() + cunningham_24_
 redundant_data_ivey = ivey_23_24.duplicated().sum() + ivey_24_25.duplicated().sum()
 redundant_data_duren = duren_23_24.duplicated().sum() + duren_24_25.duplicated().sum()
 redundant_data_pistons = pistons_23_24.duplicated().sum() + pistons_24_25.duplicated().sum()
+redundant_data_east = east_conference.duplicated().sum()
+redundant_data_west = west_conference.duplicated().sum()
 
 if redundant_data_cunningham > 0:
     print("Cunningham datasets have redundant data.")
@@ -55,6 +65,10 @@ if redundant_data_duren > 0:
     print("Duren datasets have redundant data.")
 if redundant_data_pistons > 0:
     print("Pistons datasets have redundant data.")
+if redundant_data_east > 0:
+    print("East conference dataset has redundant data.")
+if redundant_data_west > 0:
+    print("West conference dataset has redundant data.")
 
 # Lidar com dados duplicados
 def handle_duplicates(df):
@@ -126,8 +140,8 @@ if outliers_pistons.any():
 # Verificar tipos de dados
 def check_data_types(df):
     return df.dtypes
-print("Cunningham 24-25 data types:\n", check_data_types(cunningham_24_25))
-print("Pistons 24-25 data types:\n", check_data_types(pistons_24_25))
+# print("Cunningham 24-25 data types:\n", check_data_types(cunningham_24_25))
+# print("Pistons 24-25 data types:\n", check_data_types(pistons_24_25))
 
 # Excluindo a coluna "VIDEO_AVAILABLE" dos datasets de jogadores
 cunningham_23_24 = cunningham_23_24.drop(columns=['VIDEO_AVAILABLE'])
@@ -141,6 +155,10 @@ duren_24_25 = duren_24_25.drop(columns=['VIDEO_AVAILABLE'])
 pistons_23_24 = pistons_23_24.drop(columns=['Team_ID'])
 pistons_24_25 = pistons_24_25.drop(columns=['Team_ID'])
 
+# Excluindo a coluna "Conference" dos datasets de conferencia
+west_conference = west_conference.drop(columns=['Conference'])
+east_conference = east_conference.drop(columns=['Conference'])
+
 # Salvar dados limpos
 cunningham_23_24.to_csv('data/processed/cade_cunningham_stats_23_24.csv', index=False)
 cunningham_24_25.to_csv('data/processed/cade_cunningham_stats_24_25.csv', index=False)
@@ -150,3 +168,5 @@ duren_23_24.to_csv('data/processed/jalen_duren_stats_23_24.csv', index=False)
 duren_24_25.to_csv('data/processed/jalen_duren_stats_24_25.csv', index=False)
 pistons_23_24.to_csv('data/processed/detroit_pistons_games_23_24.csv', index=False)
 pistons_24_25.to_csv('data/processed/detroit_pistons_games_24_25.csv', index=False)
+west_conference.to_csv('data/processed/west_conference.csv', index=False)
+east_conference.to_csv('data/processed/east_conference.csv', index=False)

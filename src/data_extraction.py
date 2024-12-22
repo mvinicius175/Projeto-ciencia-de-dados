@@ -1,8 +1,24 @@
-from nba_api.stats.endpoints import teamgamelog, commonteamroster
+from nba_api.stats.endpoints import teamgamelog, commonteamroster, LeagueStandings
 from nba_api.stats.static import teams
 from nba_api.stats.endpoints import playergamelog
 
+# Extraindo dados de classificação por conferência
+standings = LeagueStandings()
+standings_data = standings.get_data_frames()[0]
+selected_columns = ['TeamID', 'TeamName', 'Conference', 'WINS', 'LOSSES', 'WinPCT', 'HOME', 'ROAD', 'L10', 'CurrentStreak']
+selected_standings_data = standings_data[selected_columns]
 
+east_conference = selected_standings_data[selected_standings_data['Conference'] == 'East']
+east_conference_sorted = east_conference.sort_values(by='WINS', ascending=False)
+
+west_conference = selected_standings_data[selected_standings_data['Conference'] == 'West']
+west_conference_sorted = west_conference.sort_values(by='WINS', ascending=False)
+
+east_conference_sorted.to_csv('data/raw/east_conference.csv', index=False)
+west_conference_sorted.to_csv('data/raw/west_conference.csv', index=False)
+
+
+# Extraindo dados do time Detroit Pistons
 nba_teams = teams.get_teams()
 
 detroit_pistons = [team for team in nba_teams if team['full_name'] == 'Detroit Pistons'][0]
@@ -19,6 +35,7 @@ detroit_pistons_games_24_25 = team_game_log_24_25.get_data_frames()[0]
 detroit_pistons_games_23_24.to_csv('data/raw/detroit_pistons_games_23_24.csv', index=False)
 detroit_pistons_games_24_25.to_csv('data/raw/detroit_pistons_games_24_25.csv', index=False)
 
+# Extraindo dados dos jogadores do time
 players = ['Cade Cunningham', 'Jalen Duren', 'Jaden Ivey']
 
 player_stats_23_24 = {}
