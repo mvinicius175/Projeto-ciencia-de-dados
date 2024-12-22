@@ -26,13 +26,7 @@ if missing_data_pistons.any() > 0:
 
 # Lidar com dados ausentes
 def handle_missing_data(df):
-    for column in df.columns:
-        if df[column].isnull().sum() > 0:
-            if df[column].dtype in ['float64', 'int64']:
-                df[column].fillna(df[column].mean(), inplace=True)
-            else:
-                df[column].fillna(df[column].mode()[0], inplace=True)
-    return df
+    return df.dropna()
 
 if missing_data_cunningham.any():
     cunningham_23_24 = handle_missing_data(cunningham_23_24)
@@ -133,7 +127,7 @@ if outliers_pistons.any():
 def check_data_types(df):
     return df.dtypes
 print("Cunningham 24-25 data types:\n", check_data_types(cunningham_24_25))
-print("Pistons 24-25 data types:\n", check_data_types(pistons_24_25))   # Não há necessidade de mudar o tipo de nenhuma coluna no momento
+print("Pistons 24-25 data types:\n", check_data_types(pistons_24_25))
 
 # Excluindo a coluna "VIDEO_AVAILABLE" dos datasets de jogadores
 cunningham_23_24 = cunningham_23_24.drop(columns=['VIDEO_AVAILABLE'])
@@ -142,6 +136,10 @@ ivey_23_24 = ivey_23_24.drop(columns=['VIDEO_AVAILABLE'])
 ivey_24_25 = ivey_24_25.drop(columns=['VIDEO_AVAILABLE'])
 duren_23_24 = duren_23_24.drop(columns=['VIDEO_AVAILABLE'])
 duren_24_25 = duren_24_25.drop(columns=['VIDEO_AVAILABLE'])
+
+# Excluindo a coluna "Team_ID" dos datasets de time
+pistons_23_24 = pistons_23_24.drop(columns=['Team_ID'])
+pistons_24_25 = pistons_24_25.drop(columns=['Team_ID'])
 
 # Salvar dados limpos
 cunningham_23_24.to_csv('data/processed/cade_cunningham_stats_23_24.csv', index=False)
