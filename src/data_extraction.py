@@ -1,6 +1,11 @@
-from nba_api.stats.endpoints import teamgamelog, commonteamroster, LeagueStandings
+from nba_api.stats.endpoints import teamgamelog, commonteamroster, LeagueStandings, LeagueGameLog
 from nba_api.stats.static import teams
 from nba_api.stats.endpoints import playergamelog
+
+nba_teams = teams.get_teams()
+
+detroit_pistons = [team for team in nba_teams if team['full_name'] == 'Detroit Pistons'][0]
+detroit_pistons_id = detroit_pistons['id']
 
 # Extraindo dados de classificação por conferência
 standings = LeagueStandings()
@@ -19,18 +24,16 @@ west_conference_sorted.to_csv('data/raw/west_conference.csv', index=False)
 
 
 # Extraindo dados do time Detroit Pistons
-nba_teams = teams.get_teams()
+def get_games_by_season(season):
+    # Extraindo dados dos jogos da temporada
+    game_log = LeagueGameLog(season=season)
+    games = game_log.get_data_frames()[0]
+    return games
+games_23_24 = get_games_by_season("2023-24")
+games_24_25 = get_games_by_season("2024-25")
+detroit_pistons_games_23_24 = games_23_24[games_23_24["TEAM_NAME"] == "Detroit Pistons"]
+detroit_pistons_games_24_25 = games_24_25[games_24_25["TEAM_NAME"] == "Detroit Pistons"]
 
-detroit_pistons = [team for team in nba_teams if team['full_name'] == 'Detroit Pistons'][0]
-detroit_pistons_id = detroit_pistons['id']
-
-team_game_log_23_24 = teamgamelog.TeamGameLog(team_id=detroit_pistons_id, season="2023/24")
-detroit_pistons_games_23_24 = team_game_log_23_24.get_data_frames()[0]
-# print(detroit_pistons_games_23_24.head())
-
-team_game_log_24_25 = teamgamelog.TeamGameLog(team_id=detroit_pistons_id, season="2024/25")
-detroit_pistons_games_24_25 = team_game_log_24_25.get_data_frames()[0]
-# print(detroit_pistons_games_24_25.head())
 
 detroit_pistons_games_23_24.to_csv('data/raw/detroit_pistons_games_23_24.csv', index=False)
 detroit_pistons_games_24_25.to_csv('data/raw/detroit_pistons_games_24_25.csv', index=False)

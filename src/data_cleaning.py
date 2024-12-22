@@ -175,8 +175,24 @@ duren_23_24 = duren_23_24.drop(columns=['VIDEO_AVAILABLE'])
 duren_24_25 = duren_24_25.drop(columns=['VIDEO_AVAILABLE'])
 
 # Excluindo a coluna "Team_ID" dos datasets de time
-pistons_23_24 = pistons_23_24.drop(columns=['Team_ID'])
-pistons_24_25 = pistons_24_25.drop(columns=['Team_ID'])
+pistons_23_24 = pistons_23_24.drop(columns=['TEAM_ID'])
+pistons_24_25 = pistons_24_25.drop(columns=['TEAM_ID'])
+
+# Excluindo a coluna "VIDEO_AVAILABLE" dos datasets de time
+pistons_23_24 = pistons_23_24.drop(columns=['VIDEO_AVAILABLE'])
+pistons_24_25 = pistons_24_25.drop(columns=['VIDEO_AVAILABLE'])
+
+# Excluinto a coluna "SEASON_ID" dos datasets de time
+pistons_23_24 = pistons_23_24.drop(columns=['SEASON_ID'])
+pistons_24_25 = pistons_24_25.drop(columns=['SEASON_ID'])
+
+# Excluindo a coluna "TEAM_ABBREVIATION" dos datasets de time
+pistons_23_24 = pistons_23_24.drop(columns=['TEAM_ABBREVIATION'])
+pistons_24_25 = pistons_24_25.drop(columns=['TEAM_ABBREVIATION'])
+
+# Excluindo a coluna "TEAM_NAME" dos datasets de time
+pistons_23_24 = pistons_23_24.drop(columns=['TEAM_NAME'])
+pistons_24_25 = pistons_24_25.drop(columns=['TEAM_NAME'])
 
 # Excluindo a coluna "Conference" dos datasets de conferencia
 west_conference = west_conference.drop(columns=['Conference'])
