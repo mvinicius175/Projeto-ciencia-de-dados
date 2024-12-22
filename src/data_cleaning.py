@@ -87,55 +87,78 @@ if redundant_data_pistons.any():
     pistons_23_24 = handle_duplicates(pistons_23_24)
     pistons_24_25 = handle_duplicates(pistons_24_25)
 
-# Verificar valores ruidosos (outliers)
-def detect_outliers(df):
-    outliers = pd.DataFrame()
-    for column in df.select_dtypes(include=['float64', 'int64']).columns:
-        Q1 = df[column].quantile(0.25)
-        Q3 = df[column].quantile(0.75)
-        IQR = Q3 - Q1
-        lower_bound = Q1 - 1.5 * IQR
-        upper_bound = Q3 + 1.5 * IQR
-        outliers[column] = ((df[column] < lower_bound) | (df[column] > upper_bound))
-    return outliers.sum()
+# Verificar valores negativos onde não deveria ter
+def check_negative_values(df, columns):
+    return df[columns].lt(0).sum()
 
-outliers_cunningham = detect_outliers(cunningham_23_24) + detect_outliers(cunningham_24_25)
-outliers_ivey = detect_outliers(ivey_23_24) + detect_outliers(ivey_24_25)
-outliers_duren = detect_outliers(duren_23_24) + detect_outliers(duren_24_25)
-outliers_pistons = detect_outliers(pistons_23_24) + detect_outliers(pistons_24_25)
+negative_values_cunningham = check_negative_values(cunningham_23_24, ['PTS', 'REB', 'AST']) + check_negative_values(cunningham_24_25, ['PTS', 'REB', 'AST'])
+negative_values_ivey = check_negative_values(ivey_23_24, ['PTS', 'REB', 'AST']) + check_negative_values(ivey_24_25, ['PTS', 'REB', 'AST'])
+negative_values_duren = check_negative_values(duren_23_24, ['PTS', 'REB', 'AST']) + check_negative_values(duren_24_25, ['PTS', 'REB', 'AST'])
+negative_values_pistons = check_negative_values(pistons_23_24, ['PTS', 'REB', 'AST']) + check_negative_values(pistons_24_25, ['PTS', 'REB', 'AST'])
 
-if outliers_cunningham.any() > 0:
-    print("Cunningham datasets have outliers.")
-if outliers_ivey.any() > 0:
-    print("Ivey datasets have outliers.")
-if outliers_duren.any() > 0:
-    print("Duren datasets have outliers.")
-if outliers_pistons.any() > 0:
-    print("Pistons datasets have outliers.")
+if negative_values_cunningham.any() > 0:
+    print("Cunningham datasets have negative values where they shouldn't.")
+if negative_values_ivey.any() > 0:
+    print("Ivey datasets have negative values where they shouldn't.")
+if negative_values_duren.any() > 0:
+    print("Duren datasets have negative values where they shouldn't.")
+if negative_values_pistons.any() > 0:
+    print("Pistons datasets have negative values where they shouldn't.")
 
-# Lidar com valores ruidosos (outliers)
-def handle_outliers(df):
-    for column in df.select_dtypes(include=['float64', 'int64']).columns:
-        Q1 = df[column].quantile(0.25)
-        Q3 = df[column].quantile(0.75)
-        IQR = Q3 - Q1
-        lower_bound = Q1 - 1.5 * IQR
-        upper_bound = Q3 + 1.5 * IQR
-        df[column] = df[column].apply(lambda x: lower_bound if x < lower_bound else upper_bound if x > upper_bound else x)
+# Lidar com valores negativos
+def handle_negative_values(df, columns):
+    for column in columns:
+        df[column] = df[column].apply(lambda x: 0 if x < 0 else x)
     return df
 
-if outliers_cunningham.any():
-    cunningham_23_24 = handle_outliers(cunningham_23_24)
-    cunningham_24_25 = handle_outliers(cunningham_24_25)
-if outliers_ivey.any():
-    ivey_23_24 = handle_outliers(ivey_23_24)
-    ivey_24_25 = handle_outliers(ivey_24_25)
-if outliers_duren.any():
-    duren_23_24 = handle_outliers(duren_23_24)
-    duren_24_25 = handle_outliers(duren_24_25)
-if outliers_pistons.any():
-    pistons_23_24 = handle_outliers(pistons_23_24)
-    pistons_24_25 = handle_outliers(pistons_24_25)
+if negative_values_cunningham.any():
+    cunningham_23_24 = handle_negative_values(cunningham_23_24, ['PTS', 'REB', 'AST'])
+    cunningham_24_25 = handle_negative_values(cunningham_24_25, ['PTS', 'REB', 'AST'])
+if negative_values_ivey.any():
+    ivey_23_24 = handle_negative_values(ivey_23_24, ['PTS', 'REB', 'AST'])
+    ivey_24_25 = handle_negative_values(ivey_24_25, ['PTS', 'REB', 'AST'])
+if negative_values_duren.any():
+    duren_23_24 = handle_negative_values(duren_23_24, ['PTS', 'REB', 'AST'])
+    duren_24_25 = handle_negative_values(duren_24_25, ['PTS', 'REB', 'AST'])
+if negative_values_pistons.any():
+    pistons_23_24 = handle_negative_values(pistons_23_24, ['PTS', 'REB', 'AST'])
+    pistons_24_25 = handle_negative_values(pistons_24_25, ['PTS', 'REB', 'AST'])
+
+# Verificar porcentagens que não estão entre 0 e 1
+def check_percentage_values(df, columns):
+    return df[columns].apply(lambda x: (x < 0) | (x > 1)).sum()
+
+percentage_columns = ['FG3_PCT', 'FG_PCT', 'FT_PCT']
+percentage_values_cunningham = check_percentage_values(cunningham_23_24, percentage_columns) + check_percentage_values(cunningham_24_25, percentage_columns)
+percentage_values_ivey = check_percentage_values(ivey_23_24, percentage_columns) + check_percentage_values(ivey_24_25, percentage_columns)
+percentage_values_duren = check_percentage_values(duren_23_24, percentage_columns) + check_percentage_values(duren_24_25, percentage_columns)
+percentage_values_pistons = check_percentage_values(pistons_23_24, percentage_columns) + check_percentage_values(pistons_24_25, percentage_columns)
+
+if percentage_values_cunningham.any() > 0:
+    print("Cunningham datasets have percentage values out of range.")
+if percentage_values_ivey.any() > 0:
+    print("Ivey datasets have percentage values out of range.")
+if percentage_values_duren.any() > 0:
+    print("Duren datasets have percentage values out of range.")
+if percentage_values_pistons.any() > 0:
+    print("Pistons datasets have percentage values out of range.")
+
+# Lidar com porcentagens fora do intervalo
+def handle_percentage_values(df, columns):
+    for column in columns:
+        df[column] = df[column].apply(lambda x: 0 if x < 0 else 1 if x > 1 else x)
+    return df
+
+if percentage_values_cunningham.any():
+    cunningham_23_24 = handle_percentage_values(cunningham_23_24, percentage_columns)
+    cunningham_24_25 = handle_percentage_values(cunningham_24_25, percentage_columns)
+if percentage_values_ivey.any():
+    ivey_23_24 = handle_percentage_values(ivey_23_24, percentage_columns)
+    ivey_24_25 = handle_percentage_values(ivey_24_25, percentage_columns)
+if percentage_values_duren.any():
+    duren_23_24 = handle_percentage_values(duren_23_24, percentage_columns)
+    duren_24_25 = handle_percentage_values(duren_24_25, percentage_columns)
+
 
 # Verificar tipos de dados
 def check_data_types(df):
