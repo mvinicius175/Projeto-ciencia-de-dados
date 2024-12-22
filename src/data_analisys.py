@@ -194,7 +194,7 @@ def get_adversary(matchup):
 
 
 def get_score(pts, plus_minus):
-    return f"{pts} - {pts + plus_minus}"
+    return f"{pts} - {pts - plus_minus}"
 
 games_23_24 = pistons_23_24
 games_24_25 = pistons_24_25
