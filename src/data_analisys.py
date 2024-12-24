@@ -181,7 +181,7 @@ def home_or_road(matchup):
     if "vs" in matchup:
         return "Home"
     elif "@" in matchup:
-        return "road"
+        return "Road"
     return None
 
 def get_adversary(matchup):
@@ -199,15 +199,15 @@ def get_score(pts, plus_minus):
 games_23_24 = pistons_23_24
 games_24_25 = pistons_24_25
 
-games_23_24['Home or road'] = games_23_24['MATCHUP'].apply(home_or_road)
+games_23_24['Home or Road'] = games_23_24['MATCHUP'].apply(home_or_road)
 games_23_24['Adversary'] = games_23_24['MATCHUP'].apply(get_adversary)
 games_23_24['Score'] = games_23_24.apply(lambda row: get_score(row['PTS'], row['PLUS_MINUS']), axis=1)
-games_24_25['Home or road'] = games_24_25['MATCHUP'].apply(home_or_road)
+games_24_25['Home or Road'] = games_24_25['MATCHUP'].apply(home_or_road)
 games_24_25['Adversary'] = games_24_25['MATCHUP'].apply(get_adversary)
 games_24_25['Score'] = games_24_25.apply(lambda row: get_score(row['PTS'], row['PLUS_MINUS']), axis=1)
 
-games_23_24 = games_23_24[['GAME_DATE', 'Adversary', 'WL', 'Home or road', 'Score']]
-games_24_25 = games_24_25[['GAME_DATE', 'Adversary', 'WL', 'Home or road', 'Score']]
+games_23_24 = games_23_24[['GAME_DATE', 'Adversary', 'WL', 'Home or Road', 'Score']]
+games_24_25 = games_24_25[['GAME_DATE', 'Adversary', 'WL', 'Home or Road', 'Score']]
 
 games_23_24.to_csv('data/exported/pistons_games_table_23_24.csv', index=False)
 games_24_25.to_csv('data/exported/pistons_games_table_24_25.csv', index=False)
