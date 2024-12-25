@@ -1,6 +1,9 @@
 from nba_api.stats.endpoints import teamgamelog, commonteamroster, LeagueStandings, LeagueGameLog
 from nba_api.stats.static import teams
 from nba_api.stats.endpoints import playergamelog
+import requests
+import pandas as pd
+import datetime
 
 nba_teams = teams.get_teams()
 
@@ -58,3 +61,60 @@ for player in players:
     player_stats_23_24[player].to_csv(f'data/raw/{player.lower().replace(" ", "_")}_stats_23_24.csv', index=False)
     player_stats_24_25[player].to_csv(f'data/raw/{player.lower().replace(" ", "_")}_stats_24_25.csv', index=False)
 
+url = "https://stats.nba.com/stats/commonplayerinfo"
+headers = {
+    "Host": "stats.nba.com",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36",
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Origin": "https://www.nba.com",
+    "Referer": "https://www.nba.com/",
+    "Connection": "keep-alive",
+}
+
+players = {
+    "Cade Cunningham": "1630595",
+    "Jaden Ivey": "1631093",
+    "Jalen Duren": "1631105"
+}
+
+def calculate_age(birthdate_str):
+    birthdate = datetime.datetime.strptime(birthdate_str.split("T")[0], "%Y-%m-%d")
+    today = datetime.datetime.today()
+    return today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+
+player_info = []
+
+for player_name, player_id in players.items():
+    params = {"PlayerID": player_id}
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        player_data = data['resultSets'][0]['rowSet'][0]
+        response_headers = data['resultSets'][0]['headers']
+        player_dict = dict(zip(response_headers, player_data))
+
+        birthdate = player_dict.get("BIRTHDATE", "1900-01-01")
+        idade = calculate_age(birthdate) if birthdate != "1900-01-01" else "Desconhecido"
+
+        selected_data = {
+            "Nome": player_dict.get("DISPLAY_FIRST_LAST"),
+            "Altura": player_dict.get("HEIGHT"),
+            "Peso": player_dict.get("WEIGHT"),
+            "Idade": idade,
+            "Experiência": player_dict.get("SEASON_EXP"),
+            "Posição": player_dict.get("POSITION"),
+            "Universidade": player_dict.get("SCHOOL"),
+            "Salário": player_dict.get("SALARY", "Não disponível")
+        }
+        player_info.append(selected_data)
+        print(f"Dados coletados para {player_name}")
+    except requests.exceptions.RequestException as e:
+        print(f"Erro ao acessar dados de {player_name}: {e}")
+
+for player in player_info:
+    player_name = player["Nome"]
+    player_stats_df = pd.DataFrame([player])
+    player_stats_df.to_csv(f"data/raw/{player_name.replace(' ', '_')}_profile.csv", index=False)

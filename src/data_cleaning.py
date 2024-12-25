@@ -10,6 +10,9 @@ pistons_23_24    = pd.read_csv('data/raw/detroit_pistons_games_23_24.csv')
 pistons_24_25    = pd.read_csv('data/raw/detroit_pistons_games_24_25.csv')
 west_conference = pd.read_csv('data/raw/west_conference.csv')
 east_conference = pd.read_csv('data/raw/east_conference.csv')
+cunningham_profile = pd.read_csv('data/raw/Cade_Cunningham_profile.csv')
+ivey_profile = pd.read_csv('data/raw/Jaden_Ivey_profile.csv')
+duren_profile = pd.read_csv('data/raw/Jalen_Duren_profile.csv')
 
 # Verificar dados ausentes
 missing_data_cunningham = cunningham_23_24.isnull().sum() + cunningham_24_25.isnull().sum()
@@ -198,6 +201,13 @@ pistons_24_25 = pistons_24_25.drop(columns=['TEAM_NAME'])
 west_conference = west_conference.drop(columns=['Conference'])
 east_conference = east_conference.drop(columns=['Conference'])
 
+# Convertendo o peso dos jogadores de Pounds para Quilogramas
+def pounds_to_kg(pounds):
+    return pounds * 0.453592
+cunningham_profile['Peso'] = cunningham_profile['Peso'].apply(pounds_to_kg)
+ivey_profile['Peso'] = ivey_profile['Peso'].apply(pounds_to_kg)
+duren_profile['Peso'] = duren_profile['Peso'].apply(pounds_to_kg)
+
 # Salvar dados limpos
 cunningham_23_24.to_csv('data/processed/cade_cunningham_stats_23_24.csv', index=False)
 cunningham_24_25.to_csv('data/processed/cade_cunningham_stats_24_25.csv', index=False)
@@ -209,3 +219,6 @@ pistons_23_24.to_csv('data/processed/detroit_pistons_games_23_24.csv', index=Fal
 pistons_24_25.to_csv('data/processed/detroit_pistons_games_24_25.csv', index=False)
 west_conference.to_csv('data/processed/west_conference.csv', index=False)
 east_conference.to_csv('data/processed/east_conference.csv', index=False)
+cunningham_profile.to_csv('data/processed/Cade_Cunningham_profile.csv', index=False)
+ivey_profile.to_csv('data/processed/Jaden_Ivey_profile.csv', index=False)
+duren_profile.to_csv('data/processed/Jalen_Duren_profile.csv', index=False)
