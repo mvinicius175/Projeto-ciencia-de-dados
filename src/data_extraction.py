@@ -4,6 +4,7 @@ from nba_api.stats.endpoints import playergamelog
 import requests
 import pandas as pd
 import datetime
+from bs4 import BeautifulSoup
 
 nba_teams = teams.get_teams()
 
@@ -100,6 +101,7 @@ for player_name, player_id in players.items():
         idade = calculate_age(birthdate) if birthdate != "1900-01-01" else "Desconhecido"
 
         selected_data = {
+            "ID": player_id,
             "Nome": player_dict.get("DISPLAY_FIRST_LAST"),
             "Altura": player_dict.get("HEIGHT"),
             "Peso": player_dict.get("WEIGHT"),

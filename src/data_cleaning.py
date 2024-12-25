@@ -203,10 +203,20 @@ east_conference = east_conference.drop(columns=['Conference'])
 
 # Convertendo o peso dos jogadores de Pounds para Quilogramas
 def pounds_to_kg(pounds):
-    return pounds * 0.453592
+    return round(pounds * 0.453592, 2)
+
 cunningham_profile['Peso'] = cunningham_profile['Peso'].apply(pounds_to_kg)
 ivey_profile['Peso'] = ivey_profile['Peso'].apply(pounds_to_kg)
 duren_profile['Peso'] = duren_profile['Peso'].apply(pounds_to_kg)
+
+# Convertendo a altura dos jogadores de feets para metros
+def feet_inches_to_meters(height):
+    feet, inches = map(int, height.split('-'))
+    return round(feet * 0.3048 + inches * 0.0254, 2)
+
+cunningham_profile['Altura'] = cunningham_profile['Altura'].apply(feet_inches_to_meters)
+ivey_profile['Altura'] = ivey_profile['Altura'].apply(feet_inches_to_meters)
+duren_profile['Altura'] = duren_profile['Altura'].apply(feet_inches_to_meters)
 
 # Salvar dados limpos
 cunningham_23_24.to_csv('data/processed/cade_cunningham_stats_23_24.csv', index=False)
