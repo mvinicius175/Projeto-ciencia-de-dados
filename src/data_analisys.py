@@ -1,16 +1,19 @@
 import pandas as pd
 
 
-cunningham_23_24 = pd.read_csv('data/processed/cade_cunningham_stats_23_24.csv')
-cunningham_24_25 = pd.read_csv('data/processed/cade_cunningham_stats_24_25.csv')
-ivey_23_24       = pd.read_csv('data/processed/jaden_ivey_stats_23_24.csv')
-ivey_24_25       = pd.read_csv('data/processed/jaden_ivey_stats_24_25.csv')
-duren_23_24      = pd.read_csv('data/processed/jalen_duren_stats_23_24.csv')
-duren_24_25      = pd.read_csv('data/processed/jalen_duren_stats_24_25.csv')
-pistons_23_24    = pd.read_csv('data/processed/detroit_pistons_games_23_24.csv')
-pistons_24_25    = pd.read_csv('data/processed/detroit_pistons_games_24_25.csv')
-west_conference  = pd.read_csv('data/processed/west_conference.csv')
-east_conference  = pd.read_csv('data/processed/east_conference.csv')
+cunningham_23_24    = pd.read_csv('data/processed/cade_cunningham_stats_23_24.csv')
+cunningham_24_25    = pd.read_csv('data/processed/cade_cunningham_stats_24_25.csv')
+ivey_23_24          = pd.read_csv('data/processed/jaden_ivey_stats_23_24.csv')
+ivey_24_25          = pd.read_csv('data/processed/jaden_ivey_stats_24_25.csv')
+duren_23_24         = pd.read_csv('data/processed/jalen_duren_stats_23_24.csv')
+duren_24_25         = pd.read_csv('data/processed/jalen_duren_stats_24_25.csv')
+pistons_23_24       = pd.read_csv('data/processed/detroit_pistons_games_23_24.csv')
+pistons_24_25       = pd.read_csv('data/processed/detroit_pistons_games_24_25.csv')
+west_conference     = pd.read_csv('data/processed/west_conference.csv')
+east_conference     = pd.read_csv('data/processed/east_conference.csv')
+cunningham_profile  = pd.read_csv('data/processed/Cade_Cunningham_profile.csv')
+ivey_profile        = pd.read_csv('data/processed/Jaden_Ivey_profile.csv')
+duren_profile       = pd.read_csv('data/processed/Jalen_Duren_profile.csv')
 
 ##########################################################################################################
 # Filtrar jogos em casa e fora
@@ -146,18 +149,18 @@ total_personal_fouls_23_24 = pistons_23_24['PF'].sum()
 total_personal_fouls_24_25 = pistons_24_25['PF'].sum()
 
 data_pistons_defense_23_24 = {
-    'Total Steals': [total_steals_23_24],
+    'Total Steals':             [total_steals_23_24],
     'Total Defensive Rebounds': [total_defensive_rebounds_23_24],
-    'Total Blocks': [total_blocks_23_24],
-    'Total Turnovers': [total_turnovers_23_24],
-    'Total Personal Fouls': [total_personal_fouls_23_24]
+    'Total Blocks':             [total_blocks_23_24],
+    'Total Turnovers':          [total_turnovers_23_24],
+    'Total Personal Fouls':     [total_personal_fouls_23_24]
 }
 data_pistons_defense_24_25 = {
-    'Total Steals': [total_steals_24_25],
+    'Total Steals':             [total_steals_24_25],
     'Total Defensive Rebounds': [total_defensive_rebounds_24_25],
-    'Total Blocks': [total_blocks_24_25],
-    'Total Turnovers': [total_turnovers_24_25],
-    'Total Personal Fouls': [total_personal_fouls_24_25]
+    'Total Blocks':             [total_blocks_24_25],
+    'Total Turnovers':          [total_turnovers_24_25],
+    'Total Personal Fouls':     [total_personal_fouls_24_25]
 }
 pistons_defensive_summary_23_24 = pd.DataFrame(data_pistons_defense_23_24)
 pistons_defensive_summary_23_24.to_csv('data/exported/pistons_defensive_summary_23_24.csv', index=False)
@@ -215,3 +218,56 @@ games_24_25 = games_24_25[['GAME_DATE', 'Adversary', 'Adversary Name', 'WL', 'Ho
 
 games_23_24.to_csv('data/exported/pistons_games_table_23_24.csv', index=False)
 games_24_25.to_csv('data/exported/pistons_games_table_24_25.csv', index=False)
+
+##########################################################################################################
+
+cunningham_games_23_24  = cunningham_23_24
+cunningham_games_24_25  = cunningham_24_25
+ivey_games_23_24        = ivey_23_24
+ivey_games_24_25        = ivey_24_25
+duren_games_23_24       = duren_23_24
+duren_games_24_25       = duren_24_25
+
+def transform_player_data(dataset):
+    dataset['GAME_DATE'] = pd.to_datetime(dataset['GAME_DATE']).dt.strftime('%Y-%m-%d')
+    dataset['Home or Road'] = dataset['MATCHUP'].apply(home_or_road)
+    dataset['Adversary'] = dataset['MATCHUP'].apply(get_adversary)
+    dataset['Adversary Name'] = dataset['Adversary'].apply(get_adversary_name)
+    return dataset
+
+def get_game_score(date, dataset):
+    game = dataset[dataset['GAME_DATE'] == date]
+    if not game.empty:
+        return game.iloc[0]['Score']
+    return None
+
+cunningham_games_23_24 = transform_player_data(cunningham_games_23_24)
+cunningham_games_24_25 = transform_player_data(cunningham_games_24_25)
+cunningham_games_23_24['Game Score'] = cunningham_games_23_24['GAME_DATE'].apply(lambda date: get_game_score(date, games_23_24))
+cunningham_games_24_25['Game Score'] = cunningham_games_24_25['GAME_DATE'].apply(lambda date: get_game_score(date, games_24_25))
+
+ivey_games_23_24 = transform_player_data(cunningham_games_23_24)
+ivey_games_24_25 = transform_player_data(cunningham_games_24_25)
+ivey_games_23_24['Game Score'] = ivey_games_23_24['GAME_DATE'].apply(lambda date: get_game_score(date, games_23_24))
+ivey_games_24_25['Game Score'] = ivey_games_24_25['GAME_DATE'].apply(lambda date: get_game_score(date, games_24_25))
+
+duren_games_23_24 = transform_player_data(cunningham_games_23_24)
+duren_games_24_25 = transform_player_data(cunningham_games_24_25)
+duren_games_23_24['Game Score'] = duren_games_23_24['GAME_DATE'].apply(lambda date: get_game_score(date, games_23_24))
+duren_games_24_25['Game Score'] = duren_games_24_25['GAME_DATE'].apply(lambda date: get_game_score(date, games_24_25))
+
+
+cunningham_games_23_24[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+cunningham_games_24_25[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+ivey_games_23_24[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+ivey_games_24_25[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+duren_games_23_24[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+duren_games_24_25[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+
+cunningham_games_23_24.to_csv('data/exported/cunningham_games_table_23_24.csv', index=False)
+cunningham_games_24_25.to_csv('data/exported/cunningham_games_table_24_25.csv', index=False)
+ivey_games_23_24.to_csv('data/exported/ivey_games_table_23_24.csv', index=False)
+ivey_games_24_25.to_csv('data/exported/ivey_games_table_24_25.csv', index=False)
+duren_games_23_24.to_csv('data/exported/duren_games_table_23_24.csv', index=False)
+duren_games_24_25.to_csv('data/exported/duren_games_table_24_25.csv', index=False)
+
