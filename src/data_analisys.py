@@ -278,12 +278,90 @@ def search_all_columns(player_data, search_term):
     return player_data[player_data.apply(lambda row: row.astype(str).str.lower().str.contains(search_term).any(), axis=1)]
 
 # Teste
-search_term = 'Boston'
-cunningham_search_results = search_all_columns(cunningham_games_23_24, search_term)
-print(cunningham_search_results)
+# search_term = 'Boston'
+# cunningham_search_results = search_all_columns(cunningham_games_23_24, search_term)
+# print(cunningham_search_results)
 
-ivey_search_results = search_all_columns(ivey_games_23_24, search_term)
-print(ivey_search_results)
+# ivey_search_results = search_all_columns(ivey_games_23_24, search_term)
+# print(ivey_search_results)
 
-duren_search_results = search_all_columns(duren_games_23_24, search_term)
-print(duren_search_results)
+# duren_search_results = search_all_columns(duren_games_23_24, search_term)
+# print(duren_search_results)
+
+##########################################################################################################
+
+def calculate_averages(player_data):
+    avg_points = player_data['PTS'].mean()
+    avg_rebounds = player_data['REB'].mean()
+    avg_assists = player_data['AST'].mean()
+    return avg_points, avg_rebounds, avg_assists
+
+def calculate_medians(player_data):
+    median_points = player_data['PTS'].median()
+    median_rebounds = player_data['REB'].median()
+    median_assists = player_data['AST'].median()
+    return median_points, median_rebounds, median_assists
+
+def calculate_modes(player_data):
+    mode_points = player_data['PTS'].mode()[0]
+    mode_rebounds = player_data['REB'].mode()[0]
+    mode_assists = player_data['AST'].mode()[0]
+    return mode_points, mode_rebounds, mode_assists
+
+def calculate_below_average_percentage(player_data, avg_points, avg_rebounds, avg_assists):
+    below_avg_points = (player_data['PTS'] < avg_points).mean() * 100
+    below_avg_rebounds = (player_data['REB'] < avg_rebounds).mean() * 100
+    below_avg_assists = (player_data['AST'] < avg_assists).mean() * 100
+    return below_avg_points, below_avg_rebounds, below_avg_assists
+
+def calculate_below_median_percentage(player_data, median_points, median_rebounds, median_assists):
+    below_median_points = (player_data['PTS'] < median_points).mean() * 100
+    below_median_rebounds = (player_data['REB'] < median_rebounds).mean() * 100
+    below_median_assists = (player_data['AST'] < median_assists).mean() * 100
+    return below_median_points, below_median_rebounds, below_median_assists
+
+def calculate_below_mode_percentage(player_data, mode_points, mode_rebounds, mode_assists):
+    below_mode_points = (player_data['PTS'] < mode_points).mean() * 100
+    below_mode_rebounds = (player_data['REB'] < mode_rebounds).mean() * 100
+    below_mode_assists = (player_data['AST'] < mode_assists).mean() * 100
+    return below_mode_points, below_mode_rebounds, below_mode_assists
+
+def display_player_stats(player_data, player_name):
+    avg_points, avg_rebounds, avg_assists = calculate_averages(player_data)
+    median_points, median_rebounds, median_assists = calculate_medians(player_data)
+    mode_points, mode_rebounds, mode_assists = calculate_modes(player_data)
+    below_avg_points, below_avg_rebounds, below_avg_assists = calculate_below_average_percentage(player_data, avg_points, avg_rebounds, avg_assists)
+    below_median_points, below_median_rebounds, below_median_assists = calculate_below_median_percentage(player_data, median_points, median_rebounds, median_assists)
+    below_mode_points, below_mode_rebounds, below_mode_assists = calculate_below_mode_percentage(player_data, mode_points, mode_rebounds, mode_assists)
+
+    stats_data = {
+        'Player Name': [player_name],
+        'Average Points': [avg_points],
+        'Median Points': [median_points],
+        'Mode Points': [mode_points],
+        'Average Rebounds': [avg_rebounds],
+        'Median Rebounds': [median_rebounds],
+        'Mode Rebounds': [mode_rebounds],
+        'Average Assists': [avg_assists],
+        'Median Assists': [median_assists],
+        'Mode Assists': [mode_assists],
+        'Below Average Points (%)': [below_avg_points],
+        'Below Average Rebounds (%)': [below_avg_rebounds],
+        'Below Average Assists (%)': [below_avg_assists],
+        'Below Median Points (%)': [below_median_points],
+        'Below Median Rebounds (%)': [below_median_rebounds],
+        'Below Median Assists (%)': [below_median_assists],
+        'Below Mode Points (%)': [below_mode_points],
+        'Below Mode Rebounds (%)': [below_mode_rebounds],
+        'Below Mode Assists (%)': [below_mode_assists]
+    }
+
+    stats_df = pd.DataFrame(stats_data)
+    stats_df.to_csv(f'data/exported/{player_name.replace(" ", "_").lower()}_stats.csv', index=False)
+
+display_player_stats(cunningham_games_23_24, "Cade Cunningham 23-24")
+display_player_stats(cunningham_games_24_25, "Cade Cunningham 24-25")
+display_player_stats(ivey_games_23_24, "Jaden Ivey 23-24")
+display_player_stats(ivey_games_24_25, "Jaden Ivey 24-25")
+display_player_stats(duren_games_23_24, "Jalen Duren 23-24")
+display_player_stats(duren_games_24_25, "Jalen Duren 24-25")
