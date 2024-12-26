@@ -271,3 +271,19 @@ ivey_games_24_25.to_csv('data/exported/ivey_games_table_24_25.csv', index=False)
 duren_games_23_24.to_csv('data/exported/duren_games_table_23_24.csv', index=False)
 duren_games_24_25.to_csv('data/exported/duren_games_table_24_25.csv', index=False)
 
+##########################################################################################################
+
+def search_all_columns(player_data, search_term):
+    search_term = search_term.lower()
+    return player_data[player_data.apply(lambda row: row.astype(str).str.lower().str.contains(search_term).any(), axis=1)]
+
+# Teste
+search_term = 'Boston'
+cunningham_search_results = search_all_columns(cunningham_games_23_24, search_term)
+print(cunningham_search_results)
+
+ivey_search_results = search_all_columns(ivey_games_23_24, search_term)
+print(ivey_search_results)
+
+duren_search_results = search_all_columns(duren_games_23_24, search_term)
+print(duren_search_results)
