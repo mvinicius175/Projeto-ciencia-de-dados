@@ -326,25 +326,35 @@ def calculate_below_mode_percentage(player_data, mode_points, mode_rebounds, mod
     below_mode_assists = (player_data['AST'] < mode_assists).mean() * 100
     return below_mode_points, below_mode_rebounds, below_mode_assists
 
-def display_player_stats(player_data, player_name):
+def calculate_standard_deviations(player_data):
+    std_points = player_data['PTS'].std()
+    std_rebounds = player_data['REB'].std()
+    std_assists = player_data['AST'].std()
+    return std_points, std_rebounds, std_assists
+
+def display_player_stats_with_std(player_data, player_name):
     avg_points, avg_rebounds, avg_assists = calculate_averages(player_data)
     median_points, median_rebounds, median_assists = calculate_medians(player_data)
     mode_points, mode_rebounds, mode_assists = calculate_modes(player_data)
     below_avg_points, below_avg_rebounds, below_avg_assists = calculate_below_average_percentage(player_data, avg_points, avg_rebounds, avg_assists)
     below_median_points, below_median_rebounds, below_median_assists = calculate_below_median_percentage(player_data, median_points, median_rebounds, median_assists)
     below_mode_points, below_mode_rebounds, below_mode_assists = calculate_below_mode_percentage(player_data, mode_points, mode_rebounds, mode_assists)
+    std_points, std_rebounds, std_assists = calculate_standard_deviations(player_data)
 
     stats_data = {
         'Player Name': [player_name],
         'Average Points': [avg_points],
         'Median Points': [median_points],
         'Mode Points': [mode_points],
+        'Standard Deviation Points': [std_points],
         'Average Rebounds': [avg_rebounds],
         'Median Rebounds': [median_rebounds],
         'Mode Rebounds': [mode_rebounds],
+        'Standard Deviation Rebounds': [std_rebounds],
         'Average Assists': [avg_assists],
         'Median Assists': [median_assists],
         'Mode Assists': [mode_assists],
+        'Standard Deviation Assists': [std_assists],
         'Below Average Points (%)': [below_avg_points],
         'Below Average Rebounds (%)': [below_avg_rebounds],
         'Below Average Assists (%)': [below_avg_assists],
@@ -359,9 +369,9 @@ def display_player_stats(player_data, player_name):
     stats_df = pd.DataFrame(stats_data)
     stats_df.to_csv(f'data/exported/{player_name.replace(" ", "_").lower()}_stats.csv', index=False)
 
-display_player_stats(cunningham_games_23_24, "Cade Cunningham 23-24")
-display_player_stats(cunningham_games_24_25, "Cade Cunningham 24-25")
-display_player_stats(ivey_games_23_24, "Jaden Ivey 23-24")
-display_player_stats(ivey_games_24_25, "Jaden Ivey 24-25")
-display_player_stats(duren_games_23_24, "Jalen Duren 23-24")
-display_player_stats(duren_games_24_25, "Jalen Duren 24-25")
+display_player_stats_with_std(cunningham_games_23_24, "Cade Cunningham 23-24")
+display_player_stats_with_std(cunningham_games_24_25, "Cade Cunningham 24-25")
+display_player_stats_with_std(ivey_games_23_24, "Jaden Ivey 23-24")
+display_player_stats_with_std(ivey_games_24_25, "Jaden Ivey 24-25")
+display_player_stats_with_std(duren_games_23_24, "Jalen Duren 23-24")
+display_player_stats_with_std(duren_games_24_25, "Jalen Duren 24-25")
