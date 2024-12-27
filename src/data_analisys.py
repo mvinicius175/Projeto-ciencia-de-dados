@@ -1,19 +1,25 @@
 import pandas as pd
 
 
-cunningham_23_24    = pd.read_csv('data/processed/cade_cunningham_stats_23_24.csv')
-cunningham_24_25    = pd.read_csv('data/processed/cade_cunningham_stats_24_25.csv')
-ivey_23_24          = pd.read_csv('data/processed/jaden_ivey_stats_23_24.csv')
-ivey_24_25          = pd.read_csv('data/processed/jaden_ivey_stats_24_25.csv')
-duren_23_24         = pd.read_csv('data/processed/jalen_duren_stats_23_24.csv')
-duren_24_25         = pd.read_csv('data/processed/jalen_duren_stats_24_25.csv')
-pistons_23_24       = pd.read_csv('data/processed/detroit_pistons_games_23_24.csv')
-pistons_24_25       = pd.read_csv('data/processed/detroit_pistons_games_24_25.csv')
-west_conference     = pd.read_csv('data/processed/west_conference.csv')
-east_conference     = pd.read_csv('data/processed/east_conference.csv')
-cunningham_profile  = pd.read_csv('data/processed/Cade_Cunningham_profile.csv')
-ivey_profile        = pd.read_csv('data/processed/Jaden_Ivey_profile.csv')
-duren_profile       = pd.read_csv('data/processed/Jalen_Duren_profile.csv')
+cunningham_23_24       = pd.read_csv('data/processed/cade_cunningham_stats_23_24.csv')
+cunningham_24_25       = pd.read_csv('data/processed/cade_cunningham_stats_24_25.csv')
+ivey_23_24             = pd.read_csv('data/processed/jaden_ivey_stats_23_24.csv')
+ivey_24_25             = pd.read_csv('data/processed/jaden_ivey_stats_24_25.csv')
+duren_23_24            = pd.read_csv('data/processed/jalen_duren_stats_23_24.csv')
+duren_24_25            = pd.read_csv('data/processed/jalen_duren_stats_24_25.csv')
+pistons_23_24          = pd.read_csv('data/processed/detroit_pistons_games_23_24.csv')
+pistons_24_25          = pd.read_csv('data/processed/detroit_pistons_games_24_25.csv')
+pistons_21_22          = pd.read_csv('data/processed/detroit_pistons_games_21_22.csv')
+pistons_22_23          = pd.read_csv('data/processed/detroit_pistons_games_22_23.csv')
+west_conference        = pd.read_csv('data/processed/west_conference.csv')
+east_conference        = pd.read_csv('data/processed/east_conference.csv')
+cunningham_profile     = pd.read_csv('data/processed/Cade_Cunningham_profile.csv')
+ivey_profile           = pd.read_csv('data/processed/Jaden_Ivey_profile.csv')
+duren_profile          = pd.read_csv('data/processed/Jalen_Duren_profile.csv')
+cunningham_all_seasons = pd.read_csv('data/processed/cade_cunningham_all_seasons_stats.csv')
+ivey_all_seasons       = pd.read_csv('data/processed/jaden_ivey_all_seasons_stats.csv')
+duren_all_seasons      = pd.read_csv('data/processed/jalen_duren_all_seasons_stats.csv')
+pistons_all_seasons = pd.concat([pistons_21_22, pistons_22_23, pistons_23_24, pistons_24_25], ignore_index=True)
 
 ##########################################################################################################
 # Filtrar jogos em casa e fora
@@ -169,6 +175,7 @@ pistons_defensive_summary_24_25.to_csv('data/exported/pistons_defensive_summary_
 
 ##########################################################################################################
 # Apresentar tabela de jogos do time
+
 team_name_map = {
     'ATL': 'Atlanta Hawks', 'BOS': 'Boston Celtics', 'BKN': 'Brooklyn Nets', 'CHA': 'Charlotte Hornets',
     'CHI': 'Chicago Bulls', 'CLE': 'Cleveland Cavaliers', 'DAL': 'Dallas Mavericks', 'DEN': 'Denver Nuggets',
@@ -203,6 +210,7 @@ def get_score(pts, plus_minus):
 
 games_23_24 = pistons_23_24
 games_24_25 = pistons_24_25
+games_all_seasons = pistons_all_seasons
 
 games_23_24['Home or Road'] = games_23_24['MATCHUP'].apply(home_or_road)
 games_23_24['Adversary'] = games_23_24['MATCHUP'].apply(get_adversary)
@@ -212,21 +220,33 @@ games_24_25['Home or Road'] = games_24_25['MATCHUP'].apply(home_or_road)
 games_24_25['Adversary'] = games_24_25['MATCHUP'].apply(get_adversary)
 games_24_25['Adversary Name'] = games_24_25['Adversary'].apply(get_adversary_name)
 games_24_25['Score'] = games_24_25.apply(lambda row: get_score(row['PTS'], row['PLUS_MINUS']), axis=1)
+games_all_seasons['Home or Road'] = games_all_seasons['MATCHUP'].apply(home_or_road)
+games_all_seasons['Adversary'] = games_all_seasons['MATCHUP'].apply(get_adversary)
+games_all_seasons['Adversary Name'] = games_all_seasons['Adversary'].apply(get_adversary_name)
+games_all_seasons['Score'] = games_all_seasons.apply(lambda row: get_score(row['PTS'], row['PLUS_MINUS']), axis=1)
+
+
 
 games_23_24 = games_23_24[['GAME_DATE', 'Adversary', 'Adversary Name', 'WL', 'Home or Road', 'Score']]
 games_24_25 = games_24_25[['GAME_DATE', 'Adversary', 'Adversary Name', 'WL', 'Home or Road', 'Score']]
+games_all_seasons = games_all_seasons[['GAME_DATE', 'Adversary', 'Adversary Name', 'WL', 'Home or Road', 'Score']]
 
 games_23_24.to_csv('data/exported/pistons_games_table_23_24.csv', index=False)
 games_24_25.to_csv('data/exported/pistons_games_table_24_25.csv', index=False)
+games_all_seasons.to_csv('data/exported/pistons_games_table_all_seasons.csv', index=False)
+
 
 ##########################################################################################################
 
-cunningham_games_23_24  = cunningham_23_24
-cunningham_games_24_25  = cunningham_24_25
-ivey_games_23_24        = ivey_23_24
-ivey_games_24_25        = ivey_24_25
-duren_games_23_24       = duren_23_24
-duren_games_24_25       = duren_24_25
+cunningham_games_23_24       = cunningham_23_24
+cunningham_games_24_25       = cunningham_24_25
+cunningham_games_all_seasons = cunningham_all_seasons
+ivey_games_23_24             = ivey_23_24
+ivey_games_24_25             = ivey_24_25
+ivey_games_all_seasons       = ivey_all_seasons
+duren_games_23_24            = duren_23_24
+duren_games_24_25            = duren_24_25
+duren_games_all_seasons      = duren_all_seasons
 
 def transform_player_data(dataset):
     dataset['GAME_DATE'] = pd.to_datetime(dataset['GAME_DATE']).dt.strftime('%Y-%m-%d')
@@ -241,20 +261,26 @@ def get_game_score(date, dataset):
         return game.iloc[0]['Score']
     return None
 
-cunningham_games_23_24 = transform_player_data(cunningham_games_23_24)
-cunningham_games_24_25 = transform_player_data(cunningham_games_24_25)
+cunningham_games_23_24       = transform_player_data(cunningham_games_23_24)
+cunningham_games_24_25       = transform_player_data(cunningham_games_24_25)
+cunningham_games_all_seasons = transform_player_data(cunningham_games_all_seasons)
 cunningham_games_23_24['Game Score'] = cunningham_games_23_24['GAME_DATE'].apply(lambda date: get_game_score(date, games_23_24))
 cunningham_games_24_25['Game Score'] = cunningham_games_24_25['GAME_DATE'].apply(lambda date: get_game_score(date, games_24_25))
+cunningham_games_all_seasons['Game Score'] = cunningham_games_all_seasons['GAME_DATE'].apply(lambda date: get_game_score(date, games_all_seasons))
 
-ivey_games_23_24 = transform_player_data(cunningham_games_23_24)
-ivey_games_24_25 = transform_player_data(cunningham_games_24_25)
+ivey_games_23_24 = transform_player_data(ivey_23_24)
+ivey_games_24_25 = transform_player_data(ivey_24_25)
+ivey_games_all_seasons = transform_player_data(ivey_all_seasons)
 ivey_games_23_24['Game Score'] = ivey_games_23_24['GAME_DATE'].apply(lambda date: get_game_score(date, games_23_24))
 ivey_games_24_25['Game Score'] = ivey_games_24_25['GAME_DATE'].apply(lambda date: get_game_score(date, games_24_25))
+ivey_games_all_seasons['Game Score'] = ivey_games_all_seasons['GAME_DATE'].apply(lambda date: get_game_score(date, games_all_seasons))
 
-duren_games_23_24 = transform_player_data(cunningham_games_23_24)
-duren_games_24_25 = transform_player_data(cunningham_games_24_25)
+duren_games_23_24 = transform_player_data(duren_23_24)
+duren_games_24_25 = transform_player_data(duren_24_25)
+duren_games_all_seasons = transform_player_data(duren_all_seasons)
 duren_games_23_24['Game Score'] = duren_games_23_24['GAME_DATE'].apply(lambda date: get_game_score(date, games_23_24))
 duren_games_24_25['Game Score'] = duren_games_24_25['GAME_DATE'].apply(lambda date: get_game_score(date, games_24_25))
+duren_games_all_seasons['Game Score'] = duren_games_all_seasons['GAME_DATE'].apply(lambda date: get_game_score(date, games_all_seasons))
 
 
 cunningham_games_23_24[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
@@ -263,6 +289,9 @@ ivey_games_23_24[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road
 ivey_games_24_25[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
 duren_games_23_24[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
 duren_games_24_25[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+cunningham_games_all_seasons[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+ivey_games_all_seasons[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+duren_games_all_seasons[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
 
 cunningham_games_23_24.to_csv('data/exported/cunningham_games_table_23_24.csv', index=False)
 cunningham_games_24_25.to_csv('data/exported/cunningham_games_table_24_25.csv', index=False)
@@ -270,6 +299,9 @@ ivey_games_23_24.to_csv('data/exported/ivey_games_table_23_24.csv', index=False)
 ivey_games_24_25.to_csv('data/exported/ivey_games_table_24_25.csv', index=False)
 duren_games_23_24.to_csv('data/exported/duren_games_table_23_24.csv', index=False)
 duren_games_24_25.to_csv('data/exported/duren_games_table_24_25.csv', index=False)
+cunningham_games_all_seasons.to_csv('data/exported/cunningham_games_table_all_seasons.csv', index=False)
+ivey_games_all_seasons.to_csv('data/exported/ivey_games_table_all_seasons.csv', index=False)
+duren_games_all_seasons.to_csv('data/exported/duren_games_table_all_seasons.csv', index=False)
 
 ##########################################################################################################
 
@@ -332,7 +364,7 @@ def calculate_standard_deviations(player_data):
     std_assists = player_data['AST'].std()
     return std_points, std_rebounds, std_assists
 
-def display_player_stats_with_std(player_data, player_name):
+def display_player_stats(player_data, player_name):
     avg_points, avg_rebounds, avg_assists = calculate_averages(player_data)
     median_points, median_rebounds, median_assists = calculate_medians(player_data)
     mode_points, mode_rebounds, mode_assists = calculate_modes(player_data)
@@ -340,9 +372,11 @@ def display_player_stats_with_std(player_data, player_name):
     below_median_points, below_median_rebounds, below_median_assists = calculate_below_median_percentage(player_data, median_points, median_rebounds, median_assists)
     below_mode_points, below_mode_rebounds, below_mode_assists = calculate_below_mode_percentage(player_data, mode_points, mode_rebounds, mode_assists)
     std_points, std_rebounds, std_assists = calculate_standard_deviations(player_data)
+    total_games = player_data.shape[0]
 
     stats_data = {
         'Player Name': [player_name],
+        'Total Games': [total_games],
         'Average Points': [avg_points],
         'Median Points': [median_points],
         'Mode Points': [mode_points],
@@ -369,9 +403,46 @@ def display_player_stats_with_std(player_data, player_name):
     stats_df = pd.DataFrame(stats_data)
     stats_df.to_csv(f'data/exported/{player_name.replace(" ", "_").lower()}_stats.csv', index=False)
 
-display_player_stats_with_std(cunningham_games_23_24, "Cade Cunningham 23-24")
-display_player_stats_with_std(cunningham_games_24_25, "Cade Cunningham 24-25")
-display_player_stats_with_std(ivey_games_23_24, "Jaden Ivey 23-24")
-display_player_stats_with_std(ivey_games_24_25, "Jaden Ivey 24-25")
-display_player_stats_with_std(duren_games_23_24, "Jalen Duren 23-24")
-display_player_stats_with_std(duren_games_24_25, "Jalen Duren 24-25")
+display_player_stats(cunningham_games_23_24, "Cade Cunningham 23-24")
+display_player_stats(cunningham_games_24_25, "Cade Cunningham 24-25")
+display_player_stats(ivey_games_23_24, "Jaden Ivey 23-24")
+display_player_stats(ivey_games_24_25, "Jaden Ivey 24-25")
+display_player_stats(duren_games_23_24, "Jalen Duren 23-24")
+display_player_stats(duren_games_24_25, "Jalen Duren 24-25")
+display_player_stats(cunningham_games_all_seasons, "Cade Cunningham All Seasons")
+display_player_stats(ivey_games_all_seasons, "Jaden Ivey All Seasons")
+display_player_stats(duren_games_all_seasons, "Jalen Duren All Seasons")
+
+##########################################################################################################
+
+def create_combined_dataset(player_all_seasons, player_24_25, player_name):
+    total_games_all_seasons = player_all_seasons.shape[0]
+    avg_points_all_seasons = player_all_seasons['PTS'].mean()
+    avg_assists_all_seasons = player_all_seasons['AST'].mean()
+    avg_rebounds_all_seasons = player_all_seasons['REB'].mean()
+    avg_minutes_all_seasons = player_all_seasons['MIN'].mean()
+    minutes_all_season = player_all_seasons['MIN'].sum()
+
+    total_games_24_25 = player_24_25.shape[0]
+    avg_points_24_25 = player_24_25['PTS'].mean()
+    avg_assists_24_25 = player_24_25['AST'].mean()
+    avg_rebounds_24_25 = player_24_25['REB'].mean()
+    avg_minutes_24_25 = player_24_25['MIN'].mean()
+    minutes_24_25 = player_24_25['MIN'].sum()
+
+    combined_data = {
+        'Estatisticas': ['Carreira', 'Temporada Atual'],
+        'Total de Jogos': [total_games_all_seasons, total_games_24_25],
+        'Média de Pontos': [avg_points_all_seasons, avg_points_24_25],
+        'Média de Assistências': [avg_assists_all_seasons, avg_assists_24_25],
+        'Média de Rebotes': [avg_rebounds_all_seasons, avg_rebounds_24_25],
+        'Média de Minutos em Quadra': [avg_minutes_all_seasons, avg_minutes_24_25],
+        'Minutos em Quadra': [minutes_all_season, minutes_24_25]
+    }
+
+    combined_df = pd.DataFrame(combined_data)
+    combined_df.to_csv(f'data/exported/{player_name.replace(" ", "_").lower()}_combined_stats.csv', index=False)
+
+create_combined_dataset(cunningham_games_all_seasons, cunningham_games_24_25, "Cade Cunningham")
+create_combined_dataset(ivey_games_all_seasons, ivey_games_24_25, "Jaden Ivey")
+create_combined_dataset(duren_games_all_seasons, duren_games_24_25, "Jalen Duren")

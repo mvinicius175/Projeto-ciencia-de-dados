@@ -35,12 +35,18 @@ def get_games_by_season(season):
     return games
 games_23_24 = get_games_by_season("2023-24")
 games_24_25 = get_games_by_season("2024-25")
+games_21_22 = get_games_by_season("2021-22")
+games_22_23 = get_games_by_season("2022-23")
 detroit_pistons_games_23_24 = games_23_24[games_23_24["TEAM_NAME"] == "Detroit Pistons"]
 detroit_pistons_games_24_25 = games_24_25[games_24_25["TEAM_NAME"] == "Detroit Pistons"]
+detroit_pistons_games_21_22 = games_21_22[games_21_22["TEAM_NAME"] == "Detroit Pistons"]
+detroit_pistons_games_22_23 = games_22_23[games_22_23["TEAM_NAME"] == "Detroit Pistons"]
 
 
 detroit_pistons_games_23_24.to_csv('data/raw/detroit_pistons_games_23_24.csv', index=False)
 detroit_pistons_games_24_25.to_csv('data/raw/detroit_pistons_games_24_25.csv', index=False)
+detroit_pistons_games_21_22.to_csv('data/raw/detroit_pistons_games_21_22.csv', index=False)
+detroit_pistons_games_22_23.to_csv('data/raw/detroit_pistons_games_22_23.csv', index=False)
 
 # Extraindo dados dos jogadores do time
 players = ['Cade Cunningham', 'Jalen Duren', 'Jaden Ivey']

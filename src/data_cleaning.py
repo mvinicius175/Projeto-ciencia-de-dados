@@ -11,6 +11,8 @@ duren_24_25             = pd.read_csv('data/raw/jalen_duren_stats_24_25.csv')
 duren_all_seasons       = pd.read_csv('data/raw/jalen_duren_all_seasons_stats.csv')
 pistons_23_24           = pd.read_csv('data/raw/detroit_pistons_games_23_24.csv')
 pistons_24_25           = pd.read_csv('data/raw/detroit_pistons_games_24_25.csv')
+pistons_21_22           = pd.read_csv('data/raw/detroit_pistons_games_21_22.csv')
+pistons_22_23           = pd.read_csv('data/raw/detroit_pistons_games_22_23.csv')
 west_conference         = pd.read_csv('data/raw/west_conference.csv')
 east_conference         = pd.read_csv('data/raw/east_conference.csv')
 cunningham_profile      = pd.read_csv('data/raw/Cade_Cunningham_profile.csv')
@@ -21,7 +23,7 @@ duren_profile           = pd.read_csv('data/raw/Jalen_Duren_profile.csv')
 missing_data_cunningham = cunningham_23_24.isnull().sum() + cunningham_24_25.isnull().sum() + cunningham_all_seasons.isnull().sum()
 missing_data_ivey = ivey_23_24.isnull().sum() + ivey_24_25.isnull().sum() + ivey_all_seasons.isnull().sum()
 missing_data_duren = duren_23_24.isnull().sum() + duren_24_25.isnull().sum() + duren_all_seasons.isnull().sum()
-missing_data_pistons = pistons_23_24.isnull().sum() + pistons_24_25.isnull().sum()
+missing_data_pistons = pistons_23_24.isnull().sum() + pistons_24_25.isnull().sum() + pistons_21_22.isnull().sum() + pistons_22_23.isnull().sum()
 missing_data_east = east_conference.isnull().sum()
 missing_data_west = west_conference.isnull().sum()
 
@@ -57,12 +59,14 @@ if missing_data_duren.any():
 if missing_data_pistons.any():
     pistons_23_24 = handle_missing_data(pistons_23_24)
     pistons_24_25 = handle_missing_data(pistons_24_25)
+    pistons_21_22 = handle_missing_data(pistons_21_22)
+    pistons_22_23 = handle_missing_data(pistons_22_23)
 
 # Verificar valores duplicados
 redundant_data_cunningham = cunningham_23_24.duplicated().sum() + cunningham_24_25.duplicated().sum() + cunningham_all_seasons.duplicated().sum()
 redundant_data_ivey = ivey_23_24.duplicated().sum() + ivey_24_25.duplicated().sum() + ivey_all_seasons.duplicated().sum()
 redundant_data_duren = duren_23_24.duplicated().sum() + duren_24_25.duplicated().sum() + duren_all_seasons.duplicated().sum()
-redundant_data_pistons = pistons_23_24.duplicated().sum() + pistons_24_25.duplicated().sum()
+redundant_data_pistons = pistons_23_24.duplicated().sum() + pistons_24_25.duplicated().sum() + pistons_21_22.duplicated().sum() + pistons_22_23.duplicated().sum()
 redundant_data_east = east_conference.duplicated().sum()
 redundant_data_west = west_conference.duplicated().sum()
 
@@ -98,6 +102,8 @@ if redundant_data_duren.any():
 if redundant_data_pistons.any():
     pistons_23_24 = handle_duplicates(pistons_23_24)
     pistons_24_25 = handle_duplicates(pistons_24_25)
+    pistons_21_22 = handle_duplicates(pistons_21_22)
+    pistons_22_23 = handle_duplicates(pistons_22_23)
 
 # Verificar valores negativos onde não deveria ter
 def check_negative_values(df, columns):
@@ -106,7 +112,7 @@ def check_negative_values(df, columns):
 negative_values_cunningham = check_negative_values(cunningham_23_24, ['PTS', 'REB', 'AST']) + check_negative_values(cunningham_24_25, ['PTS', 'REB', 'AST']) + check_negative_values(cunningham_all_seasons, ['PTS', 'REB', 'AST'])
 negative_values_ivey = check_negative_values(ivey_23_24, ['PTS', 'REB', 'AST']) + check_negative_values(ivey_24_25, ['PTS', 'REB', 'AST']) + check_negative_values(ivey_all_seasons, ['PTS', 'REB', 'AST'])
 negative_values_duren = check_negative_values(duren_23_24, ['PTS', 'REB', 'AST']) + check_negative_values(duren_24_25, ['PTS', 'REB', 'AST']) + check_negative_values(duren_all_seasons, ['PTS', 'REB', 'AST'])
-negative_values_pistons = check_negative_values(pistons_23_24, ['PTS', 'REB', 'AST']) + check_negative_values(pistons_24_25, ['PTS', 'REB', 'AST'])
+negative_values_pistons = check_negative_values(pistons_23_24, ['PTS', 'REB', 'AST']) + check_negative_values(pistons_24_25, ['PTS', 'REB', 'AST']) + check_negative_values(pistons_21_22, ['PTS', 'REB', 'AST']) + check_negative_values(pistons_22_23, ['PTS', 'REB', 'AST'])
 
 if negative_values_cunningham.any() > 0:
     print("Cunningham datasets have negative values where they shouldn't.")
@@ -138,6 +144,8 @@ if negative_values_duren.any():
 if negative_values_pistons.any():
     pistons_23_24 = handle_negative_values(pistons_23_24, ['PTS', 'REB', 'AST'])
     pistons_24_25 = handle_negative_values(pistons_24_25, ['PTS', 'REB', 'AST'])
+    pistons_21_22 = handle_negative_values(pistons_21_22, ['PTS', 'REB', 'AST'])
+    pistons_22_23 = handle_negative_values(pistons_22_23, ['PTS', 'REB', 'AST'])
 
 # Verificar porcentagens que não estão entre 0 e 1
 def check_percentage_values(df, columns):
@@ -147,7 +155,7 @@ percentage_columns = ['FG3_PCT', 'FG_PCT', 'FT_PCT']
 percentage_values_cunningham = check_percentage_values(cunningham_23_24, percentage_columns) + check_percentage_values(cunningham_24_25, percentage_columns) + check_percentage_values(cunningham_all_seasons, percentage_columns)
 percentage_values_ivey = check_percentage_values(ivey_23_24, percentage_columns) + check_percentage_values(ivey_24_25, percentage_columns) + check_percentage_values(ivey_all_seasons, percentage_columns)
 percentage_values_duren = check_percentage_values(duren_23_24, percentage_columns) + check_percentage_values(duren_24_25, percentage_columns) + check_percentage_values(duren_all_seasons, percentage_columns)
-percentage_values_pistons = check_percentage_values(pistons_23_24, percentage_columns) + check_percentage_values(pistons_24_25, percentage_columns)
+percentage_values_pistons = check_percentage_values(pistons_23_24, percentage_columns) + check_percentage_values(pistons_24_25, percentage_columns) + check_percentage_values(pistons_21_22, percentage_columns) + check_percentage_values(pistons_22_23, percentage_columns)
 
 if percentage_values_cunningham.any() > 0:
     print("Cunningham datasets have percentage values out of range.")
@@ -198,22 +206,32 @@ duren_all_seasons = duren_all_seasons.drop(columns=['VIDEO_AVAILABLE'])
 # Excluindo a coluna "Team_ID" dos datasets de time
 pistons_23_24 = pistons_23_24.drop(columns=['TEAM_ID'])
 pistons_24_25 = pistons_24_25.drop(columns=['TEAM_ID'])
+pistons_21_22 = pistons_21_22.drop(columns=['TEAM_ID'])
+pistons_22_23 = pistons_22_23.drop(columns=['TEAM_ID'])
 
 # Excluindo a coluna "VIDEO_AVAILABLE" dos datasets de time
 pistons_23_24 = pistons_23_24.drop(columns=['VIDEO_AVAILABLE'])
 pistons_24_25 = pistons_24_25.drop(columns=['VIDEO_AVAILABLE'])
+pistons_21_22 = pistons_21_22.drop(columns=['VIDEO_AVAILABLE'])
+pistons_22_23 = pistons_22_23.drop(columns=['VIDEO_AVAILABLE'])
 
 # Excluinto a coluna "SEASON_ID" dos datasets de time
 pistons_23_24 = pistons_23_24.drop(columns=['SEASON_ID'])
 pistons_24_25 = pistons_24_25.drop(columns=['SEASON_ID'])
+pistons_21_22 = pistons_21_22.drop(columns=['SEASON_ID'])
+pistons_22_23 = pistons_22_23.drop(columns=['SEASON_ID'])
 
 # Excluindo a coluna "TEAM_ABBREVIATION" dos datasets de time
 pistons_23_24 = pistons_23_24.drop(columns=['TEAM_ABBREVIATION'])
 pistons_24_25 = pistons_24_25.drop(columns=['TEAM_ABBREVIATION'])
+pistons_21_22 = pistons_21_22.drop(columns=['TEAM_ABBREVIATION'])
+pistons_22_23 = pistons_22_23.drop(columns=['TEAM_ABBREVIATION'])
 
 # Excluindo a coluna "TEAM_NAME" dos datasets de time
 pistons_23_24 = pistons_23_24.drop(columns=['TEAM_NAME'])
 pistons_24_25 = pistons_24_25.drop(columns=['TEAM_NAME'])
+pistons_21_22 = pistons_21_22.drop(columns=['TEAM_NAME'])
+pistons_22_23 = pistons_22_23.drop(columns=['TEAM_NAME'])
 
 # Excluindo a coluna "Conference" dos datasets de conferencia
 west_conference = west_conference.drop(columns=['Conference'])
@@ -248,6 +266,8 @@ duren_24_25.to_csv('data/processed/jalen_duren_stats_24_25.csv', index=False)
 duren_all_seasons.to_csv('data/processed/jalen_duren_all_seasons_stats.csv', index=False)
 pistons_23_24.to_csv('data/processed/detroit_pistons_games_23_24.csv', index=False)
 pistons_24_25.to_csv('data/processed/detroit_pistons_games_24_25.csv', index=False)
+pistons_21_22.to_csv('data/processed/detroit_pistons_games_21_22.csv', index=False)
+pistons_22_23.to_csv('data/processed/detroit_pistons_games_22_23.csv', index=False)
 west_conference.to_csv('data/processed/west_conference.csv', index=False)
 east_conference.to_csv('data/processed/east_conference.csv', index=False)
 cunningham_profile.to_csv('data/processed/Cade_Cunningham_profile.csv', index=False)
