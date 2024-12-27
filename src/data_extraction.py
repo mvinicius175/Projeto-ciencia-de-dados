@@ -120,3 +120,23 @@ for player in player_info:
     player_name = player["Nome"]
     player_stats_df = pd.DataFrame([player])
     player_stats_df.to_csv(f"data/raw/{player_name.replace(' ', '_')}_profile.csv", index=False)
+
+# Extraindo dados dos jogos de todas as temporadas dos jogadores
+all_seasons = ["2021-22", "2022-23", "2023-24", "2024-25"]
+
+all_player_stats = {}
+
+for player in players:
+    player_id = commonteamroster.CommonTeamRoster(team_id=detroit_pistons_id, season="2023-24").get_data_frames()[0]
+    player_id = player_id[player_id['PLAYER'].str.contains(player)]['PLAYER_ID'].values[0]
+
+    all_player_stats[player] = pd.DataFrame()
+
+    for season in all_seasons:
+        player_game_log = playergamelog.PlayerGameLog(player_id=player_id, season=season)
+        season_stats = player_game_log.get_data_frames()[0]
+        season_stats['SEASON'] = season
+        all_player_stats[player] = pd.concat([all_player_stats[player], season_stats], ignore_index=True)
+
+for player in players:
+    all_player_stats[player].to_csv(f'data/raw/{player.lower().replace(" ", "_")}_all_seasons_stats.csv', index=False)
