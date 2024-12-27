@@ -25,4 +25,4 @@ fig = px.line(resultados_por_mês, x='Ano-Mês', y='Quantidade', color='Resultad
 
 fig.update_layout(xaxis=dict(type='category'))
 
-fig.write_html('dashboards/charts/line/resultados_por_mês.html')
+fig.write_html('dashboards/line/resultados_por_mês.html')

@@ -57,6 +57,6 @@ combined_graph = px.scatter(
 )
 combined_graph.update_traces(textposition='top center')
 
-graph_23_24.write_html('dashboards/charts/scatter/pistons_points_23_24.html')
-graph_24_25.write_html('dashboards/charts/scatter/pistons_points_24_25.html')
-combined_graph.write_html('dashboards/charts/scatter/pistons_points_combined.html')
+graph_23_24.write_html('dashboards/scatter/pistons_points_23_24.html')
+graph_24_25.write_html('dashboards/scatter/pistons_points_24_25.html')
+combined_graph.write_html('dashboards/scatter/pistons_points_combined.html')

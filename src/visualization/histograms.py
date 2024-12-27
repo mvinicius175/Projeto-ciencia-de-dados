@@ -23,4 +23,4 @@ fig = px.bar(resultados_por_mês, x='Ano-Mês', y=['Vitória', 'Derrota'],
 
 fig.update_layout(xaxis=dict(type='category'), barmode='group')
 
-fig.write_html('dashboards/charts/histogram/resultados_por_mês.html')
+fig.write_html('dashboards/histogram/resultados_por_mês.html')
