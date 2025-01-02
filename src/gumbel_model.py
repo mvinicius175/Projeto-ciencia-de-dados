@@ -51,11 +51,6 @@ duren_points_params = fit_gumbel(duren_points)
 duren_rebounds_params = fit_gumbel(duren_rebounds)
 duren_assists_params = fit_gumbel(duren_assists)
 
-x = 30  # Points threshold
-y = 20  # Rebounds threshold
-z = 10  # Assists threshold
-
-
 def plot_probabilities_and_proportions(data, params, title, x_label, file_name):
     x_values = np.linspace(min(data), max(data), 100)
     prob_above = [probability_above_x(params, x) for x in x_values]
