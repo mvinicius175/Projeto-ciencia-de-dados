@@ -1,10 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import plotly.express as px
 
 cunningham_games = pd.read_csv('data/exported/cunningham_games_table_24_25.csv')
 duren_games      = pd.read_csv('data/exported/duren_games_table_24_25.csv')
 ivey_games       = pd.read_csv('data/exported/ivey_games_table_24_25.csv')
-import plotly.express as px
 
 def distribution_graph(data, player_name, stat):
     if stat in data.columns:
