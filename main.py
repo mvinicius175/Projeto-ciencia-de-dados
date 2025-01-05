@@ -14,6 +14,7 @@ from src.visualization.line_charts import plot_line_charts
 from src.visualization.pie_charts import plot_pie_charts
 from src.visualization.radar_charts import plot_radar_charts
 from src.visualization.scatter_plots import plot_scatter_plots
+
 def main():
     print("Extraindo os dados...")
     extract_data()
