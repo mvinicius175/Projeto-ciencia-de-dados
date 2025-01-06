@@ -143,4 +143,4 @@ def extract_data():
             all_player_stats[player] = pd.concat([all_player_stats[player], season_stats], ignore_index=True)
 
     for player in players:
-        all_player_stats[player].to_csv(f'data/raw/{player.lower().replace(" ", "_")}_all_seasons_stats.csv', index=False)
+        all_player_stats[player].to_csv(f'data/raw/{player.lower().replace(" ", "_")}_all_seasons_games.csv', index=False)

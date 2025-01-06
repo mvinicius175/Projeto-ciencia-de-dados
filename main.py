@@ -38,7 +38,10 @@ def main():
     print("Rodando a regressão logística...")
     run_logistic_regression()
     print("Fazendo previsões...")
-    make_predictions()
+    home_or_away = int(input("Digite 0 se o jogo for em casa ou digite 1 se for fora de casa: "))
+    while home_or_away != 0 and home_or_away != 1:
+        home_or_away = int(input("Digite 0 se o jogo for em casa ou digite 1 se for fora de casa: "))
+    make_predictions(home_or_away)
 
 if __name__ == "__main__":
     main()

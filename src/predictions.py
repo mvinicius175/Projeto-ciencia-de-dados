@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-def make_predictions():
+def make_predictions(home_or_away):
     cunningham = pd.read_csv('data/exported/cunningham_games_table_all_seasons.csv')
     ivey = pd.read_csv('data/exported/ivey_games_table_all_seasons.csv')
     duren = pd.read_csv('data/exported/duren_games_table_all_seasons.csv')
@@ -108,7 +108,7 @@ def make_predictions():
         # Salvar em arquivo HTML
         fig.write_html(output_html)
 
-    predictions, gam_points, gam_rebounds, gam_assists = train_and_predict(cunningham, 0)
+    predictions, gam_points, gam_rebounds, gam_assists = train_and_predict(cunningham, home_or_away)
     print("\nCunningham Predictions:")
     print(f"Pontos: {predictions['points'][0][0]}")
     print(f"Prob. de pontos acima da média: {predictions['points'][1][0]}")
@@ -128,7 +128,7 @@ def make_predictions():
     visualize(gam_points, gam_rebounds, gam_assists, X_cunningham, y_cunningham_points, y_cunningham_rebounds, y_cunningham_assists, 'dashboards/predictions/cunningham_predictions.html')
 
     # Ivey
-    predictions_ivey, gam_points_ivey, gam_rebounds_ivey, gam_assists_ivey = train_and_predict(ivey, 0)
+    predictions_ivey, gam_points_ivey, gam_rebounds_ivey, gam_assists_ivey = train_and_predict(ivey, home_or_away)
     print("\nIvey Predictions:")
     print(f"Pontos: {predictions_ivey['points'][0][0]}")
     print(f"Prob. de pontos acima da média: {predictions_ivey['points'][1][0]}")
@@ -147,7 +147,7 @@ def make_predictions():
     visualize(gam_points_ivey, gam_rebounds_ivey, gam_assists_ivey, X_ivey, y_ivey_points, y_ivey_rebounds, y_ivey_assists, 'dashboards/predictions/ivey_predictions.html')
 
     # Duren
-    predictions_duren, gam_points_duren, gam_rebounds_duren, gam_assists_duren = train_and_predict(duren, 0)
+    predictions_duren, gam_points_duren, gam_rebounds_duren, gam_assists_duren = train_and_predict(duren, home_or_away)
     print("\nDuren Predictions:")
     print(f"Pontos: {predictions_duren['points'][0][0]}")
     print(f"Prob. de pontos acima da média: {predictions_duren['points'][1][0]}")

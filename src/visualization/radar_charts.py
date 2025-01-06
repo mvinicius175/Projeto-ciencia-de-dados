@@ -45,7 +45,6 @@ def plot_radar_charts():
             line_close=True,
             title=f'Gráfico radar - {season}',
         )
-        fig.write_html(f'radar_chart_{season.replace("/", "_")}.html')
         return fig
 
     radar_23_24 = create_radar_chart(radar_data, '2023-24')

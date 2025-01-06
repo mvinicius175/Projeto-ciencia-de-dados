@@ -16,9 +16,9 @@ def analyze_data():
     cunningham_profile     = pd.read_csv('data/processed/Cade_Cunningham_profile.csv')
     ivey_profile           = pd.read_csv('data/processed/Jaden_Ivey_profile.csv')
     duren_profile          = pd.read_csv('data/processed/Jalen_Duren_profile.csv')
-    cunningham_all_seasons = pd.read_csv('data/processed/cade_cunningham_all_seasons_stats.csv')
-    ivey_all_seasons       = pd.read_csv('data/processed/jaden_ivey_all_seasons_stats.csv')
-    duren_all_seasons      = pd.read_csv('data/processed/jalen_duren_all_seasons_stats.csv')
+    cunningham_all_seasons = pd.read_csv('data/processed/cade_cunningham_all_seasons_games.csv')
+    ivey_all_seasons       = pd.read_csv('data/processed/jaden_ivey_all_seasons_games.csv')
+    duren_all_seasons      = pd.read_csv('data/processed/jalen_duren_all_seasons_games.csv')
     pistons_all_seasons = pd.concat([pistons_21_22, pistons_22_23, pistons_23_24, pistons_24_25], ignore_index=True)
 
     ##########################################################################################################
@@ -224,6 +224,12 @@ def analyze_data():
     games_all_seasons['Adversary'] = games_all_seasons['MATCHUP'].apply(get_adversary)
     games_all_seasons['Adversary Name'] = games_all_seasons['Adversary'].apply(get_adversary_name)
     games_all_seasons['Score'] = games_all_seasons.apply(lambda row: get_score(row['PTS'], row['PLUS_MINUS']), axis=1)
+    cunningham_all_seasons['Home or Road'] = cunningham_all_seasons['MATCHUP'].apply(home_or_road)
+    cunningham_all_seasons['Adversary'] = cunningham_all_seasons['MATCHUP'].apply(get_adversary)
+    ivey_all_seasons['Home or Road'] = ivey_all_seasons['MATCHUP'].apply(home_or_road)
+    ivey_all_seasons['Adversary'] = ivey_all_seasons['MATCHUP'].apply(get_adversary)
+    duren_all_seasons['Home or Road'] = duren_all_seasons['MATCHUP'].apply(home_or_road)
+    duren_all_seasons['Adversary'] = duren_all_seasons['MATCHUP'].apply(get_adversary)
 
 
 
@@ -305,10 +311,24 @@ def analyze_data():
 
     ##########################################################################################################
 
-    def search_all_columns(player_data, search_term):
+    def search_games(player_data, search_term):
         search_term = search_term.lower()
-        return player_data[player_data.apply(lambda row: row.astype(str).str.lower().str.contains(search_term).any(), axis=1)]
+        return player_data[player_data['Adversary Name'].str.lower().str.contains(search_term)]
 
+    search_term = input("Digite o time que deseja ver os jogos contra: ")
+
+    while True:
+        cunningham_search_results = search_games(cunningham_all_seasons, search_term)
+        ivey_search_results = search_games(ivey_all_seasons, search_term)
+        duren_search_results = search_games(duren_all_seasons, search_term)
+
+        if not cunningham_search_results.empty or not ivey_search_results.empty or not duren_search_results.empty:
+            break
+        search_term = input("Não encontrado. Tente novamente: ")
+
+    cunningham_search_results.to_csv(f'data/exported/cunningham_games_against_{search_term}.csv', index=False)
+    ivey_search_results.to_csv(f'data/exported/ivey_games_against_{search_term}.csv', index=False)
+    duren_search_results.to_csv(f'data/exported/duren_games_against_{search_term}.csv', index=False)
     # Teste
     # search_term = 'Boston'
     # cunningham_search_results = search_all_columns(cunningham_games_23_24, search_term)
