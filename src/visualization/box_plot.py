@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
+import plotly.io as pio
 
 def plot_box_plot():
     cunningham_games = pd.read_csv('data/exported/cunningham_games_table_24_25.csv')
@@ -18,4 +19,4 @@ def plot_box_plot():
                 points='all', title='Gráfico Box Plot para pontos, assistencias e rebotes por jogo',
                 labels={'Value': 'Value', 'Statistic': 'Statistic'})
 
-    fig.write_html('dashboards/box_plot/box_plot.html')
+    pio.write_image(fig, 'dashboards/box_plot/box_plot.png')

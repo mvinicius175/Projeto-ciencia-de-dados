@@ -35,7 +35,7 @@ def run_logistic_regression():
         fig_roc.add_trace(go.Scatter(x=[0, 1], y=[0, 1], mode='lines', line=dict(dash='dash'), name='F(x) = x'))
         fig_roc.update_layout(title='Receiver Operating Characteristic', xaxis_title='False Positive Rate', yaxis_title='True Positive Rate')
         os.makedirs('dashboards/roc', exist_ok=True)
-        fig_roc.write_html(f"dashboards/roc/{file_path.split('/')[-1].split('.')[0]}_roc_curve.html")
+        fig_roc.write_image(f"dashboards/roc/{file_path.split('/')[-1].split('.')[0]}_roc_curve.png")
 
     player_files = [
         'data/exported/cunningham_games_table_all_seasons.csv',

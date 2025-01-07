@@ -39,9 +39,9 @@ def plot_bar_charts():
                 color_discrete_map={'Vitórias': 'green', 'Derrotas': 'red'},
                 title='Vitórias e derrotas do Detroit Pistons na temporada 2024-25')
 
-    pistons_all_data_graph.write_html('dashboards/bar/pistons_wins_losses_all.html')
-    pistons_23_24_graph.write_html('dashboards/bar/pistons_wins_losses_23_24.html')
-    pistons_24_25_graph.write_html('dashboards/bar/pistons_wins_losses_24_25.html')
+    pistons_all_data_graph.write_image('dashboards/bar/pistons_wins_losses_all.png')
+    pistons_23_24_graph.write_image('dashboards/bar/pistons_wins_losses_23_24.png')
+    pistons_24_25_graph.write_image('dashboards/bar/pistons_wins_losses_24_25.png')
 
     ######################################################################################################
 
@@ -67,9 +67,6 @@ def plot_bar_charts():
                 color_discrete_map={'Vitórias em casa': 'green', 'Vitórias fora de casa': 'blue', 'Derrotas em casa':'red', 'Derrotas fora de casa': 'brown'},
                 title='Vitórias e derrotas do Detroit Pistons (dentro e fora de casa) na temporada 2024-25')
 
-    pistons_home_away_all_data_graph.write_html('dashboards/bar/pistons_home_away_wins_losses_all.html')
-    pistons_home_away_23_24_graph.write_html('dashboards/bar/pistons_home_away_wins_losses_23_24.html')
-    pistons_home_away_24_25_graph.write_html('dashboards/bar/pistons_home_away_wins_losses_24_25.html')
-
-
-
+    pistons_home_away_all_data_graph.write_image('dashboards/bar/pistons_home_away_wins_losses_all.png')
+    pistons_home_away_23_24_graph.write_image('dashboards/bar/pistons_home_away_wins_losses_23_24.png')
+    pistons_home_away_24_25_graph.write_image('dashboards/bar/pistons_home_away_wins_losses_24_25.png')

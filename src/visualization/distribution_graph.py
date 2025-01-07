@@ -1,6 +1,6 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import plotly.express as px
+import plotly.io as pio
 
 def plot_distribution_graph():
     cunningham_games = pd.read_csv('data/exported/cunningham_games_table_24_25.csv')
@@ -13,7 +13,7 @@ def plot_distribution_graph():
             fig.add_vline(x=data[stat].mean(), line_dash="dash", line_color="red", annotation_text="Mean")
             fig.add_vline(x=data[stat].median(), line_dash="dash", line_color="green", annotation_text="Median")
             fig.add_vline(x=data[stat].mode()[0], line_dash="dash", line_color="blue", annotation_text="Mode")
-            fig.write_html(f'dashboards/distribution/{player_name}_{stat}_distribution.html')
+            pio.write_image(fig, f'dashboards/distribution/{player_name}_{stat}_distribution.png')
         else:
             print(f"Column '{stat}' does not exist in {player_name}'s data.")
 

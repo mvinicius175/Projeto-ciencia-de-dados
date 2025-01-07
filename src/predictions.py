@@ -1,9 +1,8 @@
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from pygam import PoissonGAM, LinearGAM, s, f
+from pygam import PoissonGAM, s
 from scipy.stats import poisson
-import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
@@ -59,7 +58,7 @@ def make_predictions(home_or_away):
             'assists': (mu_assists, prob_above_threshold_assists, prob_below_threshold_assists)
         }, gam_points, gam_rebounds, gam_assists
 
-    def visualize(gam_points, gam_rebounds, gam_assists, X, y_points, y_rebounds, y_assists, output_html='visualizations.html'):
+    def visualize(gam_points, gam_rebounds, gam_assists, X, y_points, y_rebounds, y_assists, output_png='visualizations.png'):
         # Configurar gráficos interativos com plotly
         fig = make_subplots(
             rows=3, cols=2,
@@ -105,8 +104,8 @@ def make_predictions(home_or_away):
             showlegend=False
         )
 
-        # Salvar em arquivo HTML
-        fig.write_html(output_html)
+        # Salvar em arquivo PNG
+        fig.write_image(output_png)
 
     predictions, gam_points, gam_rebounds, gam_assists = train_and_predict(cunningham, home_or_away)
     print("\nCunningham Predictions:")
@@ -125,7 +124,7 @@ def make_predictions(home_or_away):
     y_cunningham_points = cunningham['PTS']
     y_cunningham_rebounds = cunningham['REB']
     y_cunningham_assists = cunningham['AST']
-    visualize(gam_points, gam_rebounds, gam_assists, X_cunningham, y_cunningham_points, y_cunningham_rebounds, y_cunningham_assists, 'dashboards/predictions/cunningham_predictions.html')
+    visualize(gam_points, gam_rebounds, gam_assists, X_cunningham, y_cunningham_points, y_cunningham_rebounds, y_cunningham_assists, 'dashboards/predictions/cunningham_predictions.png')
 
     # Ivey
     predictions_ivey, gam_points_ivey, gam_rebounds_ivey, gam_assists_ivey = train_and_predict(ivey, home_or_away)
@@ -144,7 +143,7 @@ def make_predictions(home_or_away):
     y_ivey_points = ivey['PTS']
     y_ivey_rebounds = ivey['REB']
     y_ivey_assists = ivey['AST']
-    visualize(gam_points_ivey, gam_rebounds_ivey, gam_assists_ivey, X_ivey, y_ivey_points, y_ivey_rebounds, y_ivey_assists, 'dashboards/predictions/ivey_predictions.html')
+    visualize(gam_points_ivey, gam_rebounds_ivey, gam_assists_ivey, X_ivey, y_ivey_points, y_ivey_rebounds, y_ivey_assists, 'dashboards/predictions/ivey_predictions.png')
 
     # Duren
     predictions_duren, gam_points_duren, gam_rebounds_duren, gam_assists_duren = train_and_predict(duren, home_or_away)
@@ -163,5 +162,4 @@ def make_predictions(home_or_away):
     y_duren_points = duren['PTS']
     y_duren_rebounds = duren['REB']
     y_duren_assists = duren['AST']
-    visualize(gam_points_duren, gam_rebounds_duren, gam_assists_duren, X_duren, y_duren_points, y_duren_rebounds, y_duren_assists, 'dashboards/predictions/duren_predictions.html')
-
+    visualize(gam_points_duren, gam_rebounds_duren, gam_assists_duren, X_duren, y_duren_points, y_duren_rebounds, y_duren_assists, 'dashboards/predictions/duren_predictions.png')

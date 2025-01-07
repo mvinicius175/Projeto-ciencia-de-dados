@@ -19,7 +19,6 @@ def plot_scatter_plots():
         'Points_Conceded': 'mean'
     }).reset_index()
 
-    # Agrupar por adversário e calcular a média das duas temporadas
     pistons_summary_combined = pistons_summary.groupby('Adversary').agg({
         'Points_Marked': 'mean',
         'Points_Conceded': 'mean'
@@ -58,6 +57,6 @@ def plot_scatter_plots():
     )
     combined_graph.update_traces(textposition='top center')
 
-    graph_23_24.write_html('dashboards/scatter/pistons_points_23_24.html')
-    graph_24_25.write_html('dashboards/scatter/pistons_points_24_25.html')
-    combined_graph.write_html('dashboards/scatter/pistons_points_combined.html')
+    graph_23_24.write_image('dashboards/scatter/pistons_points_23_24.png')
+    graph_24_25.write_image('dashboards/scatter/pistons_points_24_25.png')
+    combined_graph.write_image('dashboards/scatter/pistons_points_combined.png')

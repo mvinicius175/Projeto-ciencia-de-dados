@@ -1,5 +1,7 @@
 import pandas as pd
 import plotly.express as px
+import plotly.io as pio
+
 
 def plot_line_charts():
     pistons_23_24_summary = pd.read_csv('data/processed/detroit_pistons_games_23_24.csv')
@@ -26,4 +28,4 @@ def plot_line_charts():
 
     fig.update_layout(xaxis=dict(type='category'))
 
-    fig.write_html('dashboards/line/resultados_por_mês.html')
+    fig.write_image('dashboards/line/resultados_por_mês.png')

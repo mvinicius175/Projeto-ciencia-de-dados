@@ -44,7 +44,6 @@ def plot_pie_charts():
                 title='Vitórias e derrotas do Detroit Pistons na temporada 2024-25',
                 category_orders={'Resultado': category_order})
 
-    pistons_home_away_all_data_graph.write_html('dashboards/pie/pistons_home_away_wins_losses_all.html')
-    pistons_home_away_23_24_graph.write_html('dashboards/pie/pistons_home_away_wins_losses_23_24.html')
-    pistons_home_away_24_25_graph.write_html('dashboards/pie/pistons_home_away_wins_losses_24_25.html')
-
+    pistons_home_away_all_data_graph.write_image('dashboards/pie/pistons_home_away_wins_losses_all.png')
+    pistons_home_away_23_24_graph.write_image('dashboards/pie/pistons_home_away_wins_losses_23_24.png')
+    pistons_home_away_24_25_graph.write_image('dashboards/pie/pistons_home_away_wins_losses_24_25.png')

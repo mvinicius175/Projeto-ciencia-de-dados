@@ -56,7 +56,7 @@ def run_linear_regression():
             barmode='group'
         )
 
-        fig.write_html(filename)
+        fig.write_image(filename)
 
     def process_player_data(player_data, player_name):
         targets = ['PTS', 'AST', 'REB']
@@ -65,10 +65,9 @@ def run_linear_regression():
             model = train_model(X_train, y_train)
             predictions = model.predict(X_test)
             probabilities = calculate_probabilities(predictions, y_test)
-            plot_probabilities(probabilities, f'{player_name} {target} Probabilities', f'dashboards/bar/{player_name}_{target.lower()}_probabilities.html')
+            plot_probabilities(probabilities, f'{player_name} {target} Probabilities', f'dashboards/bar/{player_name}_{target.lower()}_probabilities.png')
 
     # Processar dados de todos os jogadores
     process_player_data(cunningham, 'Cunningham')
     process_player_data(ivey, 'Ivey')
     process_player_data(duren, 'Duren')
-

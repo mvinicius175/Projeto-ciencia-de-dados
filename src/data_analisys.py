@@ -97,9 +97,9 @@ def analyze_data():
         'Total Road Losses 24-25':  [total_road_losses_24_25]
 
     }
-    pistons_summary_23_24_pt1 = pd.DataFrame(data_pistons_23_24)
-    pistons_summary_23_24_pt1.to_csv('data/exported/pistons_summary_23_24_pt1_.csv', index=False)
-    pistons_summary_24_25_pt1 = pd.DataFrame(data_pistons_24_25)
+    pistons_summary_23_24_pt1 = pd.DataFrame(data_pistons_pt1_23_24)
+    pistons_summary_23_24_pt1.to_csv('data/exported/pistons_summary_23_24_pt1.csv', index=False)
+    pistons_summary_24_25_pt1 = pd.DataFrame(data_pistons_pt1_24_25)
     pistons_summary_24_25_pt1.to_csv('data/exported/pistons_summary_24_25_pt1.csv', index=False)
 
     ##########################################################################################################
