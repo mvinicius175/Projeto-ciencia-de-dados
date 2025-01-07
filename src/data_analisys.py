@@ -295,6 +295,9 @@ def analyze_data():
     ivey_games_24_25 = ivey_games_24_25[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
     duren_games_23_24 = duren_games_23_24[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
     duren_games_24_25 = duren_games_24_25[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+    cunningham_games_all_seasons_show = cunningham_games_all_seasons[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+    ivey_games_all_seasons_show = ivey_games_all_seasons[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
+    duren_games_all_seasons_show = duren_games_all_seasons[['GAME_DATE','Adversary', 'Adversary Name', 'WL', 'Home or Road', 'PTS', 'REB', 'AST', 'Game Score', 'FG3A', 'FG3M', 'MIN']]
 
     cunningham_games_23_24.to_csv('data/exported/cunningham_games_table_23_24.csv', index=False)
     cunningham_games_24_25.to_csv('data/exported/cunningham_games_table_24_25.csv', index=False)
@@ -314,9 +317,9 @@ def analyze_data():
 
     search_term = input("Digite o time que deseja ver os jogos contra: ")
 
-    cunningham_search_results = search_games(cunningham_all_seasons, search_term)
-    ivey_search_results = search_games(ivey_all_seasons, search_term)
-    duren_search_results = search_games(duren_all_seasons, search_term)
+    cunningham_search_results = search_games(cunningham_games_all_seasons_show, search_term)
+    ivey_search_results = search_games(ivey_games_all_seasons_show, search_term)
+    duren_search_results = search_games(duren_games_all_seasons_show, search_term)
 
     if cunningham_search_results.empty and ivey_search_results.empty and duren_search_results.empty:
         print("Não encontrado. Tente novamente.")
