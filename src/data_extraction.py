@@ -1,4 +1,4 @@
-from nba_api.stats.endpoints import teamgamelog, commonteamroster, LeagueStandings, LeagueGameLog
+from nba_api.stats.endpoints import commonteamroster, LeagueStandings, LeagueGameLog
 from nba_api.stats.static import teams
 from nba_api.stats.endpoints import playergamelog
 import requests
@@ -94,7 +94,7 @@ def extract_data():
     for player_name, player_id in players.items():
         params = {"PlayerID": player_id}
         try:
-            response = requests.get(url, headers=headers, params=params)
+            response = requests.get(url, headers=headers, params=params, timeout=60)
             response.raise_for_status()
             data = response.json()
 
