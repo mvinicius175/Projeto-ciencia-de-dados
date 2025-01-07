@@ -124,7 +124,7 @@ def make_predictions(home_or_away):
     y_cunningham_points = cunningham['PTS']
     y_cunningham_rebounds = cunningham['REB']
     y_cunningham_assists = cunningham['AST']
-    visualize(gam_points, gam_rebounds, gam_assists, X_cunningham, y_cunningham_points, y_cunningham_rebounds, y_cunningham_assists, 'dashboards/predictions/cunningham_predictions.png')
+    visualize(gam_points, gam_rebounds, gam_assists, X_cunningham, y_cunningham_points, y_cunningham_rebounds, y_cunningham_assists, 'static/dashboards/predictions/cunningham_predictions.png')
 
     # Ivey
     predictions_ivey, gam_points_ivey, gam_rebounds_ivey, gam_assists_ivey = train_and_predict(ivey, home_or_away)
@@ -143,7 +143,7 @@ def make_predictions(home_or_away):
     y_ivey_points = ivey['PTS']
     y_ivey_rebounds = ivey['REB']
     y_ivey_assists = ivey['AST']
-    visualize(gam_points_ivey, gam_rebounds_ivey, gam_assists_ivey, X_ivey, y_ivey_points, y_ivey_rebounds, y_ivey_assists, 'dashboards/predictions/ivey_predictions.png')
+    visualize(gam_points_ivey, gam_rebounds_ivey, gam_assists_ivey, X_ivey, y_ivey_points, y_ivey_rebounds, y_ivey_assists, 'static/dashboards/predictions/ivey_predictions.png')
 
     # Duren
     predictions_duren, gam_points_duren, gam_rebounds_duren, gam_assists_duren = train_and_predict(duren, home_or_away)
@@ -162,4 +162,4 @@ def make_predictions(home_or_away):
     y_duren_points = duren['PTS']
     y_duren_rebounds = duren['REB']
     y_duren_assists = duren['AST']
-    visualize(gam_points_duren, gam_rebounds_duren, gam_assists_duren, X_duren, y_duren_points, y_duren_rebounds, y_duren_assists, 'dashboards/predictions/duren_predictions.png')
+    visualize(gam_points_duren, gam_rebounds_duren, gam_assists_duren, X_duren, y_duren_points, y_duren_rebounds, y_duren_assists, 'static/dashboards/predictions/duren_predictions.png')

@@ -65,7 +65,7 @@ def run_linear_regression():
             model = train_model(X_train, y_train)
             predictions = model.predict(X_test)
             probabilities = calculate_probabilities(predictions, y_test)
-            plot_probabilities(probabilities, f'{player_name} {target} Probabilities', f'dashboards/bar/{player_name}_{target.lower()}_probabilities.png')
+            plot_probabilities(probabilities, f'{player_name} {target} Probabilities', f'static/dashboards/bar/{player_name}_{target.lower()}_probabilities.png')
 
     # Processar dados de todos os jogadores
     process_player_data(cunningham, 'Cunningham')

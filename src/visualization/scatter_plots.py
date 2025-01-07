@@ -57,6 +57,6 @@ def plot_scatter_plots():
     )
     combined_graph.update_traces(textposition='top center')
 
-    graph_23_24.write_image('dashboards/scatter/pistons_points_23_24.png')
-    graph_24_25.write_image('dashboards/scatter/pistons_points_24_25.png')
-    combined_graph.write_image('dashboards/scatter/pistons_points_combined.png')
+    graph_23_24.write_image('static/dashboards/scatter/pistons_points_23_24.png')
+    graph_24_25.write_image('static/dashboards/scatter/pistons_points_24_25.png')
+    combined_graph.write_image('static/dashboards/scatter/pistons_points_combined.png')

@@ -24,4 +24,4 @@ def plot_histograms():
 
     fig.update_layout(xaxis=dict(type='category'), barmode='group')
 
-    fig.write_image('dashboards/histogram/resultados_por_mês.png')
+    fig.write_image('static/dashboards/histogram/resultados_por_mês.png')

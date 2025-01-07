@@ -19,4 +19,4 @@ def plot_box_plot():
                 points='all', title='Gráfico Box Plot para pontos, assistencias e rebotes por jogo',
                 labels={'Value': 'Value', 'Statistic': 'Statistic'})
 
-    pio.write_image(fig, 'dashboards/box_plot/box_plot.png')
+    pio.write_image(fig, 'static/dashboards/box_plot/box_plot.png')

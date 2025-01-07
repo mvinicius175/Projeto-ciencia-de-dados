@@ -28,4 +28,4 @@ def plot_line_charts():
 
     fig.update_layout(xaxis=dict(type='category'))
 
-    fig.write_image('dashboards/line/resultados_por_mês.png')
+    fig.write_image('static/dashboards/line/resultados_por_mês.png')

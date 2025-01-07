@@ -51,6 +51,6 @@ def plot_radar_charts():
     radar_24_25 = create_radar_chart(radar_data, '2024-25')
     radar_combined = create_radar_chart(radar_data, 'Combined')
 
-    radar_23_24.write_image('dashboards/radar/pistons_points_scored_23_24.png')
-    radar_24_25.write_image('dashboards/radar/pistons_points_scored_24_25.png')
-    radar_combined.write_image('dashboards/radar/pistons_points_scored_combined.png')
+    radar_23_24.write_image('static/dashboards/radar/pistons_points_scored_23_24.png')
+    radar_24_25.write_image('static/dashboards/radar/pistons_points_scored_24_25.png')
+    radar_combined.write_image('static/dashboards/radar/pistons_points_scored_combined.png')

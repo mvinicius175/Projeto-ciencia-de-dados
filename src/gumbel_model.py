@@ -78,16 +78,16 @@ def run_gumbel_model():
         fig.write_image(file_name)
 
     # Cunningham
-    plot_probabilities_and_proportions(cunningham_points, cunningham_points_params, 'Probabilidades e Proporções para Pontos de Cunningham', 'Pontos', 'dashboards/line/cunningham_points_probabilities.png')
-    plot_probabilities_and_proportions(cunningham_rebounds, cunningham_rebounds_params, 'Probabilidades e Proporções para Rebotes de Cunningham', 'Rebotes', 'dashboards/line/cunningham_rebounds_probabilities.png')
-    plot_probabilities_and_proportions(cunningham_assists, cunningham_assists_params, 'Probabilidades e Proporções para Assistências de Cunningham', 'Assistências', 'dashboards/line/cunningham_assists_probabilities.png')
+    plot_probabilities_and_proportions(cunningham_points, cunningham_points_params, 'Probabilidades e Proporções para Pontos de Cunningham', 'Pontos', 'static/dashboards/line/cunningham_points_probabilities.png')
+    plot_probabilities_and_proportions(cunningham_rebounds, cunningham_rebounds_params, 'Probabilidades e Proporções para Rebotes de Cunningham', 'Rebotes', 'static/dashboards/line/cunningham_rebounds_probabilities.png')
+    plot_probabilities_and_proportions(cunningham_assists, cunningham_assists_params, 'Probabilidades e Proporções para Assistências de Cunningham', 'Assistências', 'static/dashboards/line/cunningham_assists_probabilities.png')
 
     # Ivey
-    plot_probabilities_and_proportions(ivey_points, ivey_points_params, 'Probabilidades e Proporções para Pontos de Ivey', 'Pontos', 'dashboards/line/ivey_points_probabilities.png')
-    plot_probabilities_and_proportions(ivey_rebounds, ivey_rebounds_params, 'Probabilidades e Proporções para Rebotes de Ivey', 'Rebotes', 'dashboards/line/ivey_rebounds_probabilities.png')
-    plot_probabilities_and_proportions(ivey_assists, ivey_assists_params, 'Probabilidades e Proporções para Assistências de Ivey', 'Assistências', 'dashboards/line/ivey_assists_probabilities.png')
+    plot_probabilities_and_proportions(ivey_points, ivey_points_params, 'Probabilidades e Proporções para Pontos de Ivey', 'Pontos', 'static/dashboards/line/ivey_points_probabilities.png')
+    plot_probabilities_and_proportions(ivey_rebounds, ivey_rebounds_params, 'Probabilidades e Proporções para Rebotes de Ivey', 'Rebotes', 'static/dashboards/line/ivey_rebounds_probabilities.png')
+    plot_probabilities_and_proportions(ivey_assists, ivey_assists_params, 'Probabilidades e Proporções para Assistências de Ivey', 'Assistências', 'static/dashboards/line/ivey_assists_probabilities.png')
 
     # Duren
-    plot_probabilities_and_proportions(duren_points, duren_points_params, 'Probabilidades e Proporções para Pontos de Duren', 'Pontos', 'dashboards/line/duren_points_probabilities.png')
-    plot_probabilities_and_proportions(duren_rebounds, duren_rebounds_params, 'Probabilidades e Proporções para Rebotes de Duren', 'Rebotes', 'dashboards/line/duren_rebounds_probabilities.png')
-    plot_probabilities_and_proportions(duren_assists, duren_assists_params, 'Probabilidades e Proporções para Assistências de Duren', 'Assistências', 'dashboards/line/duren_assists_probabilities.png')
+    plot_probabilities_and_proportions(duren_points, duren_points_params, 'Probabilidades e Proporções para Pontos de Duren', 'Pontos', 'static/dashboards/line/duren_points_probabilities.png')
+    plot_probabilities_and_proportions(duren_rebounds, duren_rebounds_params, 'Probabilidades e Proporções para Rebotes de Duren', 'Rebotes', 'static/dashboards/line/duren_rebounds_probabilities.png')
+    plot_probabilities_and_proportions(duren_assists, duren_assists_params, 'Probabilidades e Proporções para Assistências de Duren', 'Assistências', 'static/dashboards/line/duren_assists_probabilities.png')
