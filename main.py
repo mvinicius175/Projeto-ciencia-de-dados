@@ -21,7 +21,7 @@ def main():
     print("Limpando os dados...")
     clean_data()
     print("Analisando os dados...")
-    analyze_data()
+    search_term = analyze_data()
     print("Criando gráficos...")
     plot_scatter_plots()
     plot_radar_charts()

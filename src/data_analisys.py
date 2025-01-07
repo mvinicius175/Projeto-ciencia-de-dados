@@ -320,21 +320,12 @@ def analyze_data():
 
     if cunningham_search_results.empty and ivey_search_results.empty and duren_search_results.empty:
         print("Não encontrado. Tente novamente.")
-        analyze_data()
+        search_term = analyze_data()
+        return search_term
 
     cunningham_search_results.to_csv(f'data/exported/cunningham_games_against_{search_term}.csv', index=False)
     ivey_search_results.to_csv(f'data/exported/ivey_games_against_{search_term}.csv', index=False)
     duren_search_results.to_csv(f'data/exported/duren_games_against_{search_term}.csv', index=False)
-    # Teste
-    # search_term = 'Boston'
-    # cunningham_search_results = search_all_columns(cunningham_games_23_24, search_term)
-    # print(cunningham_search_results)
-
-    # ivey_search_results = search_all_columns(ivey_games_23_24, search_term)
-    # print(ivey_search_results)
-
-    # duren_search_results = search_all_columns(duren_games_23_24, search_term)
-    # print(duren_search_results)
 
     ##########################################################################################################
 
@@ -463,3 +454,4 @@ def analyze_data():
     create_combined_dataset(ivey_games_all_seasons, ivey_games_24_25, "Jaden Ivey")
     create_combined_dataset(duren_games_all_seasons, duren_games_24_25, "Jalen Duren")
 
+    return search_term
