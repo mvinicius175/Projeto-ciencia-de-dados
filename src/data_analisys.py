@@ -330,6 +330,14 @@ def analyze_data():
     ivey_search_results.to_csv(f'data/exported/ivey_games_against_{search_term}.csv', index=False)
     duren_search_results.to_csv(f'data/exported/duren_games_against_{search_term}.csv', index=False)
 
+    cunningham_vs_magic = search_games(cunningham_games_all_seasons_show, 'magic')
+    ivey_vs_magic = search_games(ivey_games_all_seasons_show, 'magic')
+    duren_vs_magic = search_games(duren_games_all_seasons_show, 'magic')
+
+    cunningham_vs_magic.to_csv('data/exported/cunningham_games_vs_magic.csv', index=False)
+    ivey_vs_magic.to_csv('data/exported/ivey_games_vs_magic.csv', index=False)
+    duren_vs_magic.to_csv('data/exported/duren_games_vs_magic.csv', index=False)
+
     ##########################################################################################################
 
     def calculate_averages(player_data):
