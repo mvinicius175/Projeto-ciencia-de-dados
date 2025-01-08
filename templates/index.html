@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados do Projeto</title>
+    <p style="color: red; margin: 10px; text-align: center;">
+        Aqui não estão todos os gráficos e tabelas gerados, apenas os que achei mais importante.
+    </p>
+    <p style="color: red; margin: 10px; text-align: center;">
+        Todos os gráficos estão nas pastas "static" e todas as tabelas estão na pasta "data".
+    </p>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Resultados do Projeto</h1>
+        <br>
+        <h1> Parte 1 </h1>
+        <h2>East Conference</h2>
+        {{ east_conference|safe }}
+        <h2>West Conference</h2>
+        {{ west_conference|safe }}
+        <h2>Summary 23/24</h2>
+        {{ pistons_summary_23_24|safe }}
+        <h2>Summary 24/25</h2>
+        {{ pistons_summary_24_25|safe }}
+        <h2>Data</h2>
+        {{ pistons_summary_23_24_pt1|safe }}
+        {{ pistons_summary_24_25_pt1|safe }}
+        {{ pistons_summary_23_24_pt2|safe }}
+        {{ pistons_summary_24_25_pt2|safe }}
+        <h2>Defensive Summary</h2>
+        <h4>23/24</h4>
+        {{ pistons_defensive_summary_23_24|safe }}
+        <h4>24/25</h4>
+        {{ pistons_defensive_summary_24_25|safe }}
+        <br>
+        <h1>Charts</h1>
+        <img src="{{ url_for('static', filename=bar_wins_losses_23_24) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=bar_wins_losses_24_25) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=histogram_wins_losses) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=pie_home_away_win_losses_23_24) }}" class="img-fluid" >
+        <img src="{{ url_for('static', filename=pie_home_away_win_losses_24_25) }}" class="img-fluid" >
+        <img src="{{ url_for('static', filename=line_wins_losses) }}" class="img-fluid" >
+        <img src="{{ url_for('static', filename=scatter_points_23_24) }}" class="img-fluid" >
+        <img src="{{ url_for('static', filename=scatter_points_24_25) }}" class="img-fluid" >
+        <h1>Parte 2</h1>
+        <br>
+        <h1>Players profile</h1>
+        {{ cunningham_profile|safe }}
+        {{ ivey_profile|safe }}
+        {{ duren_profile|safe }}
+        <h1>Players games against the team you chose</h1>
+        <h5>Cade Cunningham</h5>
+        {{ cunningham_games_against_x|safe }}
+        <h5>Jaden Ivey</h5>
+        {{ ivey_games_against_x|safe }}
+        <h5>Jalen Duren</h5>
+        {{ duren_games_against_x|safe }}
+        <br>
+        <h1>Players games vs Orlando Magic </h1>
+        <h5>Cade Cunningham</h5>
+        {{ cunningham_vs_magic|safe }}
+        <h5>Jaden Ivey</h5>
+        {{ ivey_vs_magic|safe }}
+        <h5>Jalen Duren</h5>
+        {{ duren_vs_magic|safe }}
+        <br>
+        <h1>Players stats</h1>
+        <h5>Cade Cunningham</h5>
+        {{ cunningham_stats_23_24|safe }}
+        {{ cunningham_stats_24_25|safe }}
+        <h5>Jaden Ivey</h5>
+        {{ ivey_stats_23_24|safe }}
+        {{ ivey_stats_24_25|safe }}
+        <h5>Jalen Duren</h5>
+        {{ duren_stats_23_24|safe }}
+        {{ duren_stats_24_25|safe }}
+        <br>
+        <h1>Players stats career vs current season</h1>
+        <h5>Cade Cunningham</h5>
+        {{ cunningham_stats_career|safe }}
+        <h5>Jaden Ivey</h5>
+        {{ ivey_stats_career|safe }}
+        <h5>Jalen Duren</h5>
+        {{ duren_stats_career|safe }}
+        <br>
+        <h1>Charts</h1>
+        <img src="{{ url_for('static', filename=distribution_cunningham_pts) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=distribution_cunningham_ast) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=distribution_cunningham_reb) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=distribution_ivey_pts) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=distribution_ivey_ast) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=distribution_ivey_reb) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=distribution_duren_pts) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=distribution_duren_ast) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=distribution_duren_reb) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=box_plot) }}" class="img-fluid">
+        <br>
+        <h1>Parte 3</h1>
+        <h1>Gumbel Model Charts</h1>
+        <img src="{{ url_for('static', filename=line_cunningham_points_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=line_cunningham_assists_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=line_cunningham_rebounds_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=line_ivey_points_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=line_ivey_assists_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=line_ivey_rebounds_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=line_duren_points_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=line_duren_assists_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=line_duren_rebounds_probabilities) }}" class="img-fluid">
+        <br>
+        <h1>Linear Regression Charts</h1>
+        <img src="{{ url_for('static', filename=bar_cunningham_pts_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=bar_cunningham_ast_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=bar_cunningham_reb_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=bar_ivey_pts_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=bar_ivey_ast_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=bar_ivey_reb_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=bar_duren_pts_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=bar_duren_ast_probabilities) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=bar_duren_reb_probabilities) }}" class="img-fluid">
+        <br>
+        <h1>Logistic Regression Charts</h1>
+        <img src="{{ url_for('static', filename=cunningham_roc_curve) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=ivey_roc_curve) }}" class="img-fluid">
+        <img src="{{ url_for('static', filename=duren_roc_curve) }}" class="img-fluid">
+        <br>
+        <h1>Predictions</h1>
+        <h6>Cade Cunningham</h6>
+        {{ cunningham_predictions|safe }}
+        <img src="{{ url_for('static', filename=chart_cunningham_predictions) }}" class="img-fluid">
+        <h6>Jaden Ivey</h6>
+        {{ ivey_predictions|safe }}
+        <img src="{{ url_for('static', filename=chart_ivey_predictions) }}" class="img-fluid">
+        <h6>Jalen Duren</h6>
+        {{ duren_predictions|safe }}
+        <img src="{{ url_for('static', filename=chart_duren_predictions) }}" class="img-fluid">
+    </div>
+</body>
+</html>
