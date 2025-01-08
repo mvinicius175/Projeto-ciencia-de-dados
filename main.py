@@ -14,6 +14,7 @@ from src.visualization.line_charts import plot_line_charts
 from src.visualization.pie_charts import plot_pie_charts
 from src.visualization.radar_charts import plot_radar_charts
 from src.visualization.scatter_plots import plot_scatter_plots
+from app import app, set_param
 
 def main():
     print("Extraindo os dados...")
@@ -21,7 +22,8 @@ def main():
     print("Limpando os dados...")
     clean_data()
     print("Analisando os dados...")
-    search_term = analyze_data()
+    search_result = analyze_data()
+    set_param(search_result)
     print("Criando gráficos...")
     plot_scatter_plots()
     plot_radar_charts()
@@ -45,3 +47,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    app.run(debug=False)
