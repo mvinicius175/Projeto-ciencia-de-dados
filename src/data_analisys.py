@@ -435,27 +435,24 @@ def analyze_data():
 
     def create_combined_dataset(player_all_seasons, player_24_25, player_name):
         total_games_all_seasons = player_all_seasons.shape[0]
-        avg_points_all_seasons = player_all_seasons['PTS'].mean()
-        avg_assists_all_seasons = player_all_seasons['AST'].mean()
-        avg_rebounds_all_seasons = player_all_seasons['REB'].mean()
-        avg_minutes_all_seasons = player_all_seasons['MIN'].mean()
-        minutes_all_season = player_all_seasons['MIN'].sum()
+        total_points_all_seasons = player_all_seasons['PTS'].sum()
+        total_assists_all_seasons = player_all_seasons['AST'].sum()
+        total_rebounds_all_seasons = player_all_seasons['REB'].sum()
+        total_minutes_all_seasons = player_all_seasons['MIN'].sum()
 
         total_games_24_25 = player_24_25.shape[0]
-        avg_points_24_25 = player_24_25['PTS'].mean()
-        avg_assists_24_25 = player_24_25['AST'].mean()
-        avg_rebounds_24_25 = player_24_25['REB'].mean()
-        avg_minutes_24_25 = player_24_25['MIN'].mean()
-        minutes_24_25 = player_24_25['MIN'].sum()
+        total_points_24_25 = player_24_25['PTS'].sum()
+        total_assists_24_25 = player_24_25['AST'].sum()
+        total_rebounds_24_25 = player_24_25['REB'].sum()
+        total_minutes_24_25 = player_24_25['MIN'].sum()
 
         combined_data = {
             'Estatisticas': ['Carreira', 'Temporada Atual'],
             'Total de Jogos': [total_games_all_seasons, total_games_24_25],
-            'Média de Pontos': [avg_points_all_seasons, avg_points_24_25],
-            'Média de Assistências': [avg_assists_all_seasons, avg_assists_24_25],
-            'Média de Rebotes': [avg_rebounds_all_seasons, avg_rebounds_24_25],
-            'Média de Minutos em Quadra': [avg_minutes_all_seasons, avg_minutes_24_25],
-            'Minutos em Quadra': [minutes_all_season, minutes_24_25]
+            'Total de Pontos': [total_points_all_seasons, total_points_24_25],
+            'Total de Assistências': [total_assists_all_seasons, total_assists_24_25],
+            'Total de Rebotes': [total_rebounds_all_seasons, total_rebounds_24_25],
+            'Total de Minutos em Quadra': [total_minutes_all_seasons, total_minutes_24_25]
         }
 
         combined_df = pd.DataFrame(combined_data)
