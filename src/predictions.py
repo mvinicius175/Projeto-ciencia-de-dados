@@ -108,16 +108,23 @@ def make_predictions(home_or_away):
         fig.write_image(output_png)
 
     predictions, gam_points, gam_rebounds, gam_assists = train_and_predict(cunningham, home_or_away)
-    print("\nCunningham Predictions:")
-    print(f"Pontos: {predictions['points'][0][0]}")
-    print(f"Prob. de pontos acima da média: {predictions['points'][1][0]}")
-    print(f"Prob. de pontos abaixo da média: {predictions['points'][2][0]}")
-    print(f"Assistências: {predictions['assists'][0][0]}")
-    print(f"Prob. de assistências acima da média: {predictions['assists'][1][0]}")
-    print(f"Prob. de assistências abaixo da média: {predictions['assists'][2][0]}")
-    print(f"Rebotes: {predictions['rebounds'][0][0]}")
-    print(f"Prob. Rebotes acima da média: {predictions['rebounds'][1][0]}")
-    print(f"Prob. Rebotes abaixo da média: {predictions['rebounds'][2][0]}\n")
+
+    # Criar DataFrame com as previsões
+    predictions_df = pd.DataFrame({
+        'Player': ['Cunningham'],
+        'Points': [predictions['points'][0][0]],
+        'Prob_Points_Above_Average': [predictions['points'][1][0]],
+        'Prob_Points_Below_Average': [predictions['points'][2][0]],
+        'Assists': [predictions['assists'][0][0]],
+        'Prob_Assists_Above_Average': [predictions['assists'][1][0]],
+        'Prob_Assists_Below_Average': [predictions['assists'][2][0]],
+        'Rebounds': [predictions['rebounds'][0][0]],
+        'Prob_Rebounds_Above_Average': [predictions['rebounds'][1][0]],
+        'Prob_Rebounds_Below_Average': [predictions['rebounds'][2][0]]
+    })
+
+    # Salvar DataFrame em um arquivo CSV
+    predictions_df.to_csv('data/exported/cunningham_predictions.csv', index=False)
 
     # Cunningham
     X_cunningham = cunningham[['Home or Road', 'MIN', 'FGA']]
@@ -128,16 +135,22 @@ def make_predictions(home_or_away):
 
     # Ivey
     predictions_ivey, gam_points_ivey, gam_rebounds_ivey, gam_assists_ivey = train_and_predict(ivey, home_or_away)
-    print("\nIvey Predictions:")
-    print(f"Pontos: {predictions_ivey['points'][0][0]}")
-    print(f"Prob. de pontos acima da média: {predictions_ivey['points'][1][0]}")
-    print(f"Prob. de pontos abaixo da média: {predictions_ivey['points'][2][0]}")
-    print(f"Assistências: {predictions_ivey['assists'][0][0]}")
-    print(f"Prob. de assistências acima da média: {predictions_ivey['assists'][1][0]}")
-    print(f"Prob. de assistências abaixo da média: {predictions_ivey['assists'][2][0]}")
-    print(f"Rebotes: {predictions_ivey['rebounds'][0][0]}")
-    print(f"Prob. Rebotes acima da média: {predictions_ivey['rebounds'][1][0]}")
-    print(f"Prob. Rebotes abaixo da média: {predictions_ivey['rebounds'][2][0]}\n")
+    # Criar DataFrame com as previsões de Ivey
+    predictions_ivey_df = pd.DataFrame({
+        'Player': ['Ivey'],
+        'Points': [predictions_ivey['points'][0][0]],
+        'Prob_Points_Above_Average': [predictions_ivey['points'][1][0]],
+        'Prob_Points_Below_Average': [predictions_ivey['points'][2][0]],
+        'Assists': [predictions_ivey['assists'][0][0]],
+        'Prob_Assists_Above_Average': [predictions_ivey['assists'][1][0]],
+        'Prob_Assists_Below_Average': [predictions_ivey['assists'][2][0]],
+        'Rebounds': [predictions_ivey['rebounds'][0][0]],
+        'Prob_Rebounds_Above_Average': [predictions_ivey['rebounds'][1][0]],
+        'Prob_Rebounds_Below_Average': [predictions_ivey['rebounds'][2][0]]
+    })
+
+    # Salvar DataFrame em um arquivo CSV
+    predictions_ivey_df.to_csv('data/exported/ivey_predictions.csv', index=False)
 
     X_ivey = ivey[['Home or Road', 'MIN', 'FGA']]
     y_ivey_points = ivey['PTS']
@@ -147,16 +160,22 @@ def make_predictions(home_or_away):
 
     # Duren
     predictions_duren, gam_points_duren, gam_rebounds_duren, gam_assists_duren = train_and_predict(duren, home_or_away)
-    print("\nDuren Predictions:")
-    print(f"Pontos: {predictions_duren['points'][0][0]}")
-    print(f"Prob. de pontos acima da média: {predictions_duren['points'][1][0]}")
-    print(f"Prob. de pontos abaixo da média: {predictions_duren['points'][2][0]}")
-    print(f"Assistências: {predictions_duren['assists'][0][0]}")
-    print(f"Prob. de assistências acima da média: {predictions_duren['assists'][1][0]}")
-    print(f"Prob. de assistências abaixo da média: {predictions_duren['assists'][2][0]}")
-    print(f"Rebotes: {predictions_duren['rebounds'][0][0]}")
-    print(f"Prob. Rebotes acima da média: {predictions_duren['rebounds'][1][0]}")
-    print(f"Prob. Rebotes abaixo da média: {predictions_duren['rebounds'][2][0]}\n")
+    # Criar DataFrame com as previsões de Duren
+    predictions_duren_df = pd.DataFrame({
+        'Player': ['Duren'],
+        'Points': [predictions_duren['points'][0][0]],
+        'Prob_Points_Above_Average': [predictions_duren['points'][1][0]],
+        'Prob_Points_Below_Average': [predictions_duren['points'][2][0]],
+        'Assists': [predictions_duren['assists'][0][0]],
+        'Prob_Assists_Above_Average': [predictions_duren['assists'][1][0]],
+        'Prob_Assists_Below_Average': [predictions_duren['assists'][2][0]],
+        'Rebounds': [predictions_duren['rebounds'][0][0]],
+        'Prob_Rebounds_Above_Average': [predictions_duren['rebounds'][1][0]],
+        'Prob_Rebounds_Below_Average': [predictions_duren['rebounds'][2][0]]
+    })
+
+    # Salvar DataFrame em um arquivo CSV
+    predictions_duren_df.to_csv('data/exported/duren_predictions.csv', index=False)
 
     X_duren = duren[['Home or Road', 'MIN', 'FGA']]
     y_duren_points = duren['PTS']
