@@ -10,6 +10,9 @@ def make_predictions(home_or_away):
     cunningham = pd.read_csv('data/exported/cunningham_games_table_all_seasons.csv')
     ivey = pd.read_csv('data/exported/ivey_games_table_all_seasons.csv')
     duren = pd.read_csv('data/exported/duren_games_table_all_seasons.csv')
+    cunningham_stats = pd.read_csv('data/exported/cade_cunningham_all_seasons_stats.csv')
+    ivey_stats = pd.read_csv('data/exported/jaden_ivey_all_seasons_stats.csv')
+    duren_stats = pd.read_csv('data/exported/jalen_duren_all_seasons_stats.csv')
 
     cunningham['Home or Road'] = cunningham['Home or Road'].map({'Home': 0, 'Road': 1})
     ivey['Home or Road'] = ivey['Home or Road'].map({'Home': 0, 'Road': 1})
@@ -112,16 +115,21 @@ def make_predictions(home_or_away):
     # Criar DataFrame com as previsões
     predictions_df = pd.DataFrame({
         'Player': ['Cunningham'],
-        'Points': [predictions['points'][0][0]],
+        'Points Predicted': [predictions['points'][0][0]],
+        'Average_Points': [cunningham_stats['Average Points'].mean()],
         'Prob_Points_Above_Average': [predictions['points'][1][0]],
         'Prob_Points_Below_Average': [predictions['points'][2][0]],
-        'Assists': [predictions['assists'][0][0]],
+        'Assists Predicted': [predictions['assists'][0][0]],
+        'Average_Assists': [cunningham_stats['Average Assists'].mean()],
         'Prob_Assists_Above_Average': [predictions['assists'][1][0]],
         'Prob_Assists_Below_Average': [predictions['assists'][2][0]],
-        'Rebounds': [predictions['rebounds'][0][0]],
+        'Rebounds Predicted': [predictions['rebounds'][0][0]],
+        'Average_Rebounds': [cunningham_stats['Average Rebounds'].mean()],
         'Prob_Rebounds_Above_Average': [predictions['rebounds'][1][0]],
         'Prob_Rebounds_Below_Average': [predictions['rebounds'][2][0]]
     })
+
+
 
     # Salvar DataFrame em um arquivo CSV
     predictions_df.to_csv('data/exported/cunningham_predictions.csv', index=False)
@@ -138,13 +146,16 @@ def make_predictions(home_or_away):
     # Criar DataFrame com as previsões de Ivey
     predictions_ivey_df = pd.DataFrame({
         'Player': ['Ivey'],
-        'Points': [predictions_ivey['points'][0][0]],
+        'Points Predicted': [predictions_ivey['points'][0][0]],
+        'Average Points': [ivey_stats['Average Points'].mean()],
         'Prob_Points_Above_Average': [predictions_ivey['points'][1][0]],
         'Prob_Points_Below_Average': [predictions_ivey['points'][2][0]],
-        'Assists': [predictions_ivey['assists'][0][0]],
+        'Assists Predicted': [predictions_ivey['assists'][0][0]],
+        'Average Assists': [ivey_stats['Average Assists'].mean()],
         'Prob_Assists_Above_Average': [predictions_ivey['assists'][1][0]],
         'Prob_Assists_Below_Average': [predictions_ivey['assists'][2][0]],
-        'Rebounds': [predictions_ivey['rebounds'][0][0]],
+        'Rebound Predicteds': [predictions_ivey['rebounds'][0][0]],
+        'Average Rebounds': [ivey_stats['Average Rebounds'].mean()],
         'Prob_Rebounds_Above_Average': [predictions_ivey['rebounds'][1][0]],
         'Prob_Rebounds_Below_Average': [predictions_ivey['rebounds'][2][0]]
     })
@@ -163,13 +174,16 @@ def make_predictions(home_or_away):
     # Criar DataFrame com as previsões de Duren
     predictions_duren_df = pd.DataFrame({
         'Player': ['Duren'],
-        'Points': [predictions_duren['points'][0][0]],
+        'Points Predicted': [predictions_duren['points'][0][0]],
+        'Average Points': [duren_stats['Average Points'].mean()],
         'Prob_Points_Above_Average': [predictions_duren['points'][1][0]],
         'Prob_Points_Below_Average': [predictions_duren['points'][2][0]],
-        'Assists': [predictions_duren['assists'][0][0]],
+        'Assists Predicted': [predictions_duren['assists'][0][0]],
+        'Average Assists': [duren_stats['Average Assists'].mean()],
         'Prob_Assists_Above_Average': [predictions_duren['assists'][1][0]],
         'Prob_Assists_Below_Average': [predictions_duren['assists'][2][0]],
-        'Rebounds': [predictions_duren['rebounds'][0][0]],
+        'Rebounds Predicted': [predictions_duren['rebounds'][0][0]],
+        'Average Rebounds': [duren_stats['Average Rebounds'].mean()],
         'Prob_Rebounds_Above_Average': [predictions_duren['rebounds'][1][0]],
         'Prob_Rebounds_Below_Average': [predictions_duren['rebounds'][2][0]]
     })
