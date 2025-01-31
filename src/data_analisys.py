@@ -326,13 +326,17 @@ def analyze_data():
         search_term = analyze_data()
         return search_term
 
+    cunningham_search_results = cunningham_search_results.sort_values(by='GAME_DATE')
+    ivey_search_results = ivey_search_results.sort_values(by='GAME_DATE')
+    duren_search_results = duren_search_results.sort_values(by='GAME_DATE')
+
     cunningham_search_results.to_csv(f'data/exported/cunningham_games_against_{search_term}.csv', index=False)
     ivey_search_results.to_csv(f'data/exported/ivey_games_against_{search_term}.csv', index=False)
     duren_search_results.to_csv(f'data/exported/duren_games_against_{search_term}.csv', index=False)
 
-    cunningham_vs_magic = search_games(cunningham_games_all_seasons_show, 'magic')
-    ivey_vs_magic = search_games(ivey_games_all_seasons_show, 'magic')
-    duren_vs_magic = search_games(duren_games_all_seasons_show, 'magic')
+    cunningham_vs_magic = search_games(cunningham_games_all_seasons_show, 'magic').sort_values(by='GAME_DATE')
+    ivey_vs_magic = search_games(ivey_games_all_seasons_show, 'magic').sort_values(by='GAME_DATE')
+    duren_vs_magic = search_games(duren_games_all_seasons_show, 'magic').sort_values(by='GAME_DATE')
 
     cunningham_vs_magic.to_csv('data/exported/cunningham_games_vs_magic.csv', index=False)
     ivey_vs_magic.to_csv('data/exported/ivey_games_vs_magic.csv', index=False)
