@@ -2,8 +2,6 @@ tempCodeRunnerFile.py
 testing_stuff.py
 *.csv
 *.png
-*
 
-!*/
-
-!.gitignore
+!data/
+!static/
